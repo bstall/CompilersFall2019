@@ -49,7 +49,9 @@ module StallCompiler{
             }
 
             //loop through code
-            
+            for(var x = 0; x < inputLength; x++){
+                
+            }
         }
     }
 }
