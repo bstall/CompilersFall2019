@@ -1,3 +1,7 @@
+//File for lexer program
+//Barbara Stall
+//Compilers Fall 2019
+
 module StallCompiler{
     export class lexer{
         public lexerProgram(){
@@ -10,15 +14,19 @@ module StallCompiler{
 
             //regular expression variables
             //--how is this id--
-            var id_RE: RegExp = /^[a-z]$/;
+            var id_regex: RegExp = /^[a-z]$/;
             //--how is this digit--
-            var digit_RE: RegExp = /0|(^[1-9]([0-9])*)$/;
+            var digit_regex: RegExp = /0|(^[1-9]([0-9])*)$/;
             //--how is this char--
-            var char_RE: RegExp = /^[a-z]$/;
+            var char_regex: RegExp = /^[a-z]$/;
             //--why using codeString--
             var codeString = false;
             //--how is this string--
-            var string_RE: RegExp = /^"[a-z\S]*"$/;
+            var string_regex: RegExp = /^"[a-z\S]*"$/;
+            //regex for anything in grammar
+            var any_regex: RegExp = /[a-z]+|[1-9]|(==)|(!=)|"[^"]*"|(")|(\/\*[^\/\*]*\*\/)|(\S)|(\n)/g;
+            //comments regex
+            var com_RE: RegExp = /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/;;
 
             //implementing multiple programs at one execution
             var programCount = 1;
@@ -50,7 +58,39 @@ module StallCompiler{
 
             //loop through code
             for(var x = 0; x < inputLength; x++){
-                
+                //make sure regex in grammar
+                var checkRegex = inputLines[x].match(any_regex);
+                if(checkRegex == null){
+                    return;
+                }
+                else{
+                    var lengthCheck =  checkRegex.length;
+                }
+
+                if(checkRegex != null){
+                    //work with Tokens
+                    for(var y = 0; y  < lengthCheck; y++){
+                        var currentToken = checkRegex[y];
+                        console.log(currentToken);
+
+                        //now find tokens
+                        //check for keyword
+
+                        //check for ID
+
+                        //deal with multiple programs
+
+                        //check for symbol
+
+                        //check for digit
+
+                        //check for character
+
+                        //ignore comments
+
+                        //else throw error
+                    }
+                }
             }
         }
     }
