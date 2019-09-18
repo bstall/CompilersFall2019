@@ -104,6 +104,30 @@ module StallCompiler{
                         }
 
                         //check for symbol
+                        else if(symbols.indexOf(currentToken) > -1){
+                            for(var t = 0; t < _Punc_.length; t++){
+                                if(currentToken === _Punc_[t].value){
+                                    var TType = _Punc_[t].type;
+                                    var TValue = _Punc_[t].value
+                                    var token = new Token(TType, TValue, x);
+                                    var thing = (TType + "[" + TValue + "]" + " on line " + x);
+
+                                    if((token.type === QUOTE.type) && (codeString === false)){
+                                        _Log_.printE(" not a complete string");
+                                        lexError = lexError + 1;
+                                    }
+                                    else if((token.type === QUOTE.type) && (codeString === true)){
+                                        _Tokens_.push(token);
+                                        codeString = !codeString;
+                                        _Log_.printM("Debug the Lexer: " + thing);
+                                    }
+                                    else{
+                                        _Tokens_.push(token);
+                                        _Log_.printM("Debug the Lexer: " + thing);
+                                    }
+                                }
+                            }
+                        }
 
                         //check for digit
 
