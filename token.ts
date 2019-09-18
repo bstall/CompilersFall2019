@@ -1,4 +1,4 @@
-/// <reference path="globals.ts"/>
+/// <reference path="global.ts"/>
 /// <reference path="lexer.ts"/>
 
 module TSCompiler{

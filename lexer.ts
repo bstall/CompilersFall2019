@@ -2,8 +2,8 @@
 //Barbara Stall
 //Compilers Fall 2019
 
-/// <reference path="globals.ts"/>
-/// <reference path="lexer.ts"/>
+/// <reference path="global.ts"/>
+/// <reference path="token.ts"/>
 
 module StallCompiler{
     export class lexer{
