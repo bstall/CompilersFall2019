@@ -130,12 +130,69 @@ module StallCompiler{
                         }
 
                         //check for digit
+                        else if(digit_regex.test(currentToken)){
+                            for (var i = 0; i < currentToken.length; i++){
+                                var token = new Token('DIGIT', currentToken[i], x);
+                                var thing = ('DIGIT' + " [ " + currentToken[i] + " ] " + " on line " + x);
+                                _Tokens_.push(token);
+                                _Log_.printM("Debug the Lexer: " + thing);
+                            }
+                        }
 
                         //check for character
-
-                        //ignore comments
+                        else if(char_regex.test(currentToken)){
+                            for (var i = 0; i < currentToken.length; i++){
+                                    var token = new Token('CHAR', currentToken[i], x);
+                                    var thing = ('CHAR' + " [ " + currentToken[i] + " ] " + " on line " + x);
+                                    _Tokens_.push(token);
+                                    _Log_.printM("Debug the Lexer: " + thing);
+                            }
+                        }
+                        //checking for strings
+                        else if(string_regex.test(currentToken)){
+                            for(var i = 0; i < currentToken.length; i++){
+                                if(currentToken[i]=== '"'){
+                                    var token = new Token(QUOTE.type, currentToken[i], x+1);
+                                    var thing = ('QUOTE' + " [ " + currentToken[i] + " ] " + " on line " + x);
+                                    _Log_.printM("Debug the Lexer: " + thing);
+                                    _Tokens_.push(token);
+                                }
+                                else if(currentToken[i] === ' '){
+                                    var token = new Token(SPACE.type, currentToken[i], x+1);
+                                    var stuff = ('SPACE' + " [ " + currentToken[i] + " ] " + " on line " + x);
+                                    _Log_.printM("Debug the Lexer: " + stuff);
+                                    _Tokens_.push(token);
+                                }
+                                else if(currentToken[i] === "/" && currentToken[i+1] === "*"){
+                                        i = i + 2;
+                                        while(currentToken[i] != "/"){
+                                            i++;
+                                        }
+                                        i++;
+                                }
+                                else if (char_regex.test(currentToken[i])){
+                                        var token = new Token('CHAR', currentToken[i], x);
+                                        var thing = ('CHAR' + " [ " + currentToken[i] + " ] " + " on line " + x);
+                                        _Tokens_.push(token);
+                                        _Log_.printM("Debug the Lexer: " + thing);
+                                }
+                                else{
+                                    _Log_.printE("Not valid in string -" + currentToken[i] + " on line " + x);
+                                    lexError = lexError + 1;
+                                }
+                            }
+                        }
+                        //handle comments being ignored
+                        else if(com_RE.test(currentToken)){
+                            console.log(currentToken);
+                            console.log("Comment");
+                        }
 
                         //else throw error
+                        else{
+                            _Log_.printE(" Invalid Token " +"[" + currentToken + "]" + " on line " + x);
+                            lexError = lexError + 1;
+                        }
                     }
                 }
             }
