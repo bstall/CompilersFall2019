@@ -85,11 +85,23 @@ module StallCompiler{
                                     var TType = _Keywords_[j].type;
                                     var TValue = _Keywords_[j].value;
                                     var token = new Token(TType, TValue, x);
+                                    var thing = (TType + "[" + TValue + "]" + " on line " + x);
+                                    _Tokens_.push(token);
+                                    _Log_.printM("Debug the Lexer: " + thing);
                                 }
                             }
                         }
 
                         //check for ID
+                        else if(id_regex.test(currentToken)){
+                            for (var i = 0; i < 1; i++){
+                                var token = new Token('ID', currentToken[i], x);
+                                var thing = ('ID' + " [ " + currentToken[i] + " ] " + " on line " + x);
+                                    _Tokens_.push(token);
+                                   // console.log(currentT);
+                                    _Log_.printM("Debug the Lexer: " + thing);
+                            }
+                        }
 
                         //check for symbol
 
