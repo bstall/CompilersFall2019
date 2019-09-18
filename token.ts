@@ -1,10 +1,16 @@
 /// <reference path="global.ts"/>
 /// <reference path="lexer.ts"/>
 
-module TSCompiler{
+module StallCompiler{
     export class Token{
+        public newToken(type, value, line){
+            var Token = new Token(type, value, line);
+            return Token;
+        }
         constructor(public type: string, public value: string, public line: number){
-            //work with this later
+            //this.type = type;
+            //this.value = value;
+            //this.line = line;
         }
     }
 }

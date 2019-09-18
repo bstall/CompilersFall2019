@@ -3,6 +3,8 @@
 /// <reference path="lexer.ts"/>
 
 var _Tokens_ = [];
+var CurrentToken_: TSCompiler.Token = null;
+var _TIndex_: number = 0;
 
 //keywords of grammar
 const PRINT = {type: 'PRINT', value: 'print'};

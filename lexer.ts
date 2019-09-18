@@ -78,10 +78,17 @@ module StallCompiler{
 
                         //now find tokens
                         //check for keyword
+                        if(keywords.indexOf(currentToken) > - 1){
+                            for(var j = 0; j < _Keywords_.length; j++){
+                                if(currentToken === _Keywords_[j].value){
+                                    var TType = _Keywords_[j].type;
+                                    var TValue = _Keywords_[j].value;
+                                    var token = new Token(TType, TValue, x);
+                                }
+                            }
+                        }
 
                         //check for ID
-
-                        //deal with multiple programs
 
                         //check for symbol
 
