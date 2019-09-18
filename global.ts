@@ -1,9 +1,12 @@
 //file for global items in Stall Compiler
-/// <reference path="token.ts"/>
-/// <reference path="lexer.ts"/>
+/// <reference path='token.ts'/>
+/// <reference path='lexer.ts'/>
+/// <reference path='logging.ts'/>
 
+var _Log_ = StallCompiler.logging; //fix later
+var _Lexer_ = StallCompiler.lexer; //fix later
 var _Tokens_ = [];
-var CurrentToken_: TSCompiler.Token = null;
+var CurrentToken_: StallCompiler.Token = null;
 var _TIndex_: number = 0;
 
 //keywords of grammar

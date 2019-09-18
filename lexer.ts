@@ -2,8 +2,9 @@
 //Barbara Stall
 //Compilers Fall 2019
 
-/// <reference path="global.ts"/>
-/// <reference path="token.ts"/>
+/// <reference path='global.ts'/>
+/// <reference path='token.ts'/>
+/// <reference path='logging.ts'/>
 
 module StallCompiler{
     export class lexer{
@@ -37,7 +38,7 @@ module StallCompiler{
 
             //Test print
             //will fix _Log_ error later
-            _Log_.printMessage("INFO Lexer - program " + programCount);
+            _Log_.printM("INFO Lexer - program " + programCount);
 
 
             //get code, trim, split into lines, get length
@@ -46,7 +47,7 @@ module StallCompiler{
 
             //check for $ - end of program symbol
             if(inputCode[inputCode.length - 1] != '$'){
-                _Log_.printWarning("Missing $ at end of program");
+                _Log_.printW("Missing $ at end of program");
                 (<HTMLInputElement>document.getElementById("inputTA")).value += '$';
                 inputCode += '$';
             }

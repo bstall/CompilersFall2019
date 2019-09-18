@@ -1,5 +1,5 @@
-/// <reference path="global.ts"/>
-/// <reference path="lexer.ts"/>
+/// <reference path='global.ts'/>
+/// <reference path='lexer.ts'/>
 
 module StallCompiler{
     export class Token{
