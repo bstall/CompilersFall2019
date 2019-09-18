@@ -2,6 +2,9 @@
 //Barbara Stall
 //Compilers Fall 2019
 
+/// <reference path="globals.ts"/>
+/// <reference path="lexer.ts"/>
+
 module StallCompiler{
     export class lexer{
         public lexerProgram(){

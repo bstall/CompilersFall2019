@@ -1,4 +1,7 @@
 //file for global items in Stall Compiler
+/// <reference path="token.ts"/>
+/// <reference path="lexer.ts"/>
+
 var _Tokens_ = [];
 
 //keywords of grammar
