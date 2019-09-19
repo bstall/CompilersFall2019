@@ -6,7 +6,7 @@
 var _Log_ = StallCompiler.logging; //fix later
 var _Lexer_ = StallCompiler.lexer; //fix later
 var _Tokens_ = [];
-var CurrentToken_: StallCompiler.Token = null;
+var _CurrentToken_: StallCompiler.Token = null;
 var _TIndex_: number = 0;
 
 //keywords of grammar
