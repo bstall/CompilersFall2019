@@ -43,7 +43,7 @@ module StallCompiler{
 
             //check for $ - end of program symbol
             if(inputCode[inputCode.length - 1] != '$'){
-                _Log_.printW("Missing $ at end of program");
+                _Log_.printWarningMessage("Missing $ at end of program");
                 (<HTMLInputElement>document.getElementById("inputTextArea")).value += '$';
                 inputCode += '$';
             }
@@ -83,7 +83,7 @@ module StallCompiler{
                                     var token = new Token(TType, TValue, x);
                                     var thing = (TType + "[" + TValue + "]" + " on line " + x);
                                     _Tokens_.push(token);
-                                    _Log_.printM("Debug the Lexer: " + thing);
+                                    _Log_.printMessage("Debug the Lexer: " + thing);
                                 }
                             }
                         }
@@ -94,7 +94,7 @@ module StallCompiler{
                                 var token = new Token('ID', currentToken[i], x);
                                 var thing = ('ID' + " [ " + currentToken[i] + " ] " + " on line " + x);
                                     _Tokens_.push(token);
-                                    _Log_.printM("Debug the Lexer: " + thing);
+                                    _Log_.printMessage("Debug the Lexer: " + thing);
                             }
                         }
 
@@ -108,17 +108,17 @@ module StallCompiler{
                                     var thing = (TType + "[" + TValue + "]" + " on line " + x);
 
                                     if((token.type === QUOTE.type) && (codeString === false)){
-                                        _Log_.printE(" not a complete string");
+                                        _Log_.printErrorMessage(" not a complete string");
                                         lexError = lexError + 1;
                                     }
                                     else if((token.type === QUOTE.type) && (codeString === true)){
                                         _Tokens_.push(token);
                                         codeString = !codeString;
-                                        _Log_.printM("Debug the Lexer: " + thing);
+                                        _Log_.printMessage("Debug the Lexer: " + thing);
                                     }
                                     else{
                                         _Tokens_.push(token);
-                                        _Log_.printM("Debug the Lexer: " + thing);
+                                        _Log_.printMessage("Debug the Lexer: " + thing);
                                     }
                                 }
                             }
@@ -130,7 +130,7 @@ module StallCompiler{
                                 var token = new Token('DIGIT', currentToken[i], x);
                                 var thing = ('DIGIT' + " [ " + currentToken[i] + " ] " + " on line " + x);
                                 _Tokens_.push(token);
-                                _Log_.printM("Debug the Lexer: " + thing);
+                                _Log_.printMessage("Debug the Lexer: " + thing);
                             }
                         }
 
@@ -140,7 +140,7 @@ module StallCompiler{
                                     var token = new Token('CHAR', currentToken[i], x);
                                     var thing = ('CHAR' + " [ " + currentToken[i] + " ] " + " on line " + x);
                                     _Tokens_.push(token);
-                                    _Log_.printM("Debug the Lexer: " + thing);
+                                    _Log_.printMessage("Debug the Lexer: " + thing);
                             }
                         }
                         //checking for strings
@@ -149,13 +149,13 @@ module StallCompiler{
                                 if(currentToken[i]=== '"'){
                                     var token = new Token(QUOTE.type, currentToken[i], x+1);
                                     var thing = ('QUOTE' + " [ " + currentToken[i] + " ] " + " on line " + x);
-                                    _Log_.printM("Debug the Lexer: " + thing);
+                                    _Log_.printMessage("Debug the Lexer: " + thing);
                                     _Tokens_.push(token);
                                 }
                                 else if(currentToken[i] === ' '){
                                     var token = new Token(SPACE.type, currentToken[i], x+1);
                                     var stuff = ('SPACE' + " [ " + currentToken[i] + " ] " + " on line " + x);
-                                    _Log_.printM("Debug the Lexer: " + stuff);
+                                    _Log_.printMessage("Debug the Lexer: " + stuff);
                                     _Tokens_.push(token);
                                 }
                                 else if(currentToken[i] === "/" && currentToken[i+1] === "*"){
@@ -169,10 +169,10 @@ module StallCompiler{
                                         var token = new Token('CHAR', currentToken[i], x);
                                         var thing = ('CHAR' + " [ " + currentToken[i] + " ] " + " on line " + x);
                                         _Tokens_.push(token);
-                                        _Log_.printM("Debug the Lexer: " + thing);
+                                        _Log_.printMessage("Debug the Lexer: " + thing);
                                 }
                                 else{
-                                    _Log_.printE("Not valid in string -" + currentToken[i] + " on line " + x);
+                                    _Log_.printErrorMessage("Not valid in string -" + currentToken[i] + " on line " + x);
                                     lexError = lexError + 1;
                                 }
                             }
@@ -185,7 +185,7 @@ module StallCompiler{
 
                         //else throw error
                         else{
-                            _Log_.printE(" Invalid Token " +"[" + currentToken + "]" + " on line " + x);
+                            _Log_.printErrorMessage(" Invalid Token " +"[" + currentToken + "]" + " on line " + x);
                             lexError = lexError + 1;
                         }
                     }

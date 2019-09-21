@@ -11,15 +11,19 @@ module StallCompiler{
             _CurrentToken_ = null;
             _TIndex_ = 0;
 
-            var _Lexer_ = new StallCompiler.lexer();  
-            var _Log_   = new StallCompiler.logging(); 
+            //var _Lexer_ = new StallCompiler.lexer();  
+            //var _Log_   = new StallCompiler.logging(); 
             
             //interfacing with HTML
-            var log1: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("outputTA");
-            var sourceCode: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("inputTA");
+            var log1: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("outputTextArea");
+            var sourceCode: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("inputTextArea");
             sourceCode.value = this.trim(sourceCode.value);
             log1.value = "";
 
+            if (sourceCode.value === '') {
+                _Log_.printMessage("Empty text area.");
+                return;
+            }
             _Lexer_.lexerProgram();
 
             
@@ -29,15 +33,6 @@ module StallCompiler{
         public static trim(words) {
             return words.replace(/^\s+ | \s+$/g, "");
         }
-        //method for buffer
-        public static leftBuff(string: string, length: number): string {
-            if (string.length === 2) {
-                return string;
-            }
-            for (var k = 1; k < length; k++) {
-                string = "0" + string;
-            }
-            return string;
-        }
+        
     }
 }
