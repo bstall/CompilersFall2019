@@ -1,10 +1,11 @@
 //file for global items in Stall Compiler
-/// <reference path='token.ts'/>
-/// <reference path='lexer.ts'/>
-/// <reference path='logging.ts'/>
+/// <reference path="token.ts"/>
+/// <reference path="lexer.ts"/>
+/// <reference path="logging.ts"/>
+/// <reference path="util.ts"/>
 
-var _Log_ = StallCompiler.logging; //fix later
-var _Lexer_ = StallCompiler.lexer; //fix later
+var _Log_ : StallCompiler.logging; 
+var _Lexer_ : StallCompiler.lexer; 
 var _Tokens_ = [];
 var _CurrentToken_: StallCompiler.Token = null;
 var _TIndex_: number = 0;
