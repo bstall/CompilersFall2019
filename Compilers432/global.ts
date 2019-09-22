@@ -4,7 +4,7 @@
 /// <reference path="logging.ts"/>
 /// <reference path="util.ts"/>
 
-var _Log_ : StallCompiler.logging; 
+var _Log_ : StallCompiler.logs; 
 var _Lexer_ : StallCompiler.lexer; 
 var _Tokens_ = [];
 var _CurrentToken_: StallCompiler.Token = null;

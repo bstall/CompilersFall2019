@@ -5,7 +5,7 @@
 /// <reference path="token.ts"/>
 
 module StallCompiler{
-    export class logging{
+    export class logs{
         public printErrorMessage(message: string): void{
             var log1 = <HTMLTextAreaElement> document.getElementById("outputTextArea");
             log1.value += "ERROR: " + message + "\n";
@@ -18,5 +18,6 @@ module StallCompiler{
             var log1 = <HTMLTextAreaElement> document.getElementById("outputTextArea");
             log1.value += message + "\n";
         }
+        
     }
 }

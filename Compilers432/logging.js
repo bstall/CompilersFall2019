@@ -4,22 +4,22 @@
 /// <reference path="token.ts"/>
 var StallCompiler;
 (function (StallCompiler) {
-    var logging = /** @class */ (function () {
-        function logging() {
+    var logs = /** @class */ (function () {
+        function logs() {
         }
-        logging.prototype.printErrorMessage = function (message) {
+        logs.prototype.printErrorMessage = function (message) {
             var log1 = document.getElementById("outputTextArea");
             log1.value += "ERROR: " + message + "\n";
         };
-        logging.prototype.printWarningMessage = function (message) {
+        logs.prototype.printWarningMessage = function (message) {
             var log1 = document.getElementById("outputTextArea");
             log1.value += "WARNING!!!: " + message + "\n";
         };
-        logging.prototype.printMessage = function (message) {
+        logs.prototype.printMessage = function (message) {
             var log1 = document.getElementById("outputTextArea");
             log1.value += message + "\n";
         };
-        return logging;
+        return logs;
     }());
-    StallCompiler.logging = logging;
+    StallCompiler.logs = logs;
 })(StallCompiler || (StallCompiler = {}));
