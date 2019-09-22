@@ -1,8 +1,8 @@
 //file for global items in Stall Compiler
-/// <reference path='token.ts'/>
-/// <reference path='lexer.ts'/>
-/// <reference path='logging.ts'/>
-/// <reference path='util.ts'/>
+/// <reference path="token.ts"/>
+/// <reference path="lexer.ts"/>
+/// <reference path="logging.ts"/>
+/// <reference path="util.ts"/>
 var _Log_;
 var _Lexer_;
 var _Tokens_ = [];
