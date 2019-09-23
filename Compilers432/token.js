@@ -9,9 +9,9 @@ var StallCompiler;
             this.type = type;
             this.value = value;
             this.line = line;
-            //this.type = type;
-            //this.value = value;
-            //this.line = line;
+            this.type = type;
+            this.value = value;
+            this.line = line;
         }
         Token.prototype.newToken = function (type, value, line) {
             var Token = new Token(type, value, line);

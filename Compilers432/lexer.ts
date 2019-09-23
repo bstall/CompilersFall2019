@@ -18,19 +18,12 @@ module StallCompiler{
             var symbols = ['{', '}', '(', ')', '"', '=', '==', '!=', '+', '$'];
 
             //regular expression variables
-            //--how is this id--
             var id_regex: RegExp = /^[a-z]$/;
-            //--how is this digit--
             var digit_regex: RegExp = /0|(^[1-9]([0-9])*)$/;
-            //--how is this char--
             var char_regex: RegExp = /^[a-z]$/;
-            //--why using codeString--
             var codeString = false;
-            //--how is this string--
             var string_regex: RegExp = /^"[a-z\S]*"$/;
-            //regex for anything in grammar
             var any_regex: RegExp = /[a-z]+|[1-9]|(==)|(!=)|"[^"]*"|(")|(\/\*[^\/\*]*\*\/)|(\S)|(\n)/g;
-            //comments regex
             var com_RE: RegExp = /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/;;
 
             //implementing multiple programs at one execution
@@ -43,7 +36,7 @@ module StallCompiler{
 
             //check for $ - end of program symbol
             if(inputCode[inputCode.length - 1] != '$'){
-                _Log_.printWarningMessage("Missing $ at end of program");
+                _Log_.printWarningMessage("Missing $ to end program");
                 (<HTMLInputElement>document.getElementById("inputTextArea")).value += '$';
                 inputCode += '$';
             }

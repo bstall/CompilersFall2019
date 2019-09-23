@@ -17,19 +17,12 @@ var StallCompiler;
             var keywords = ['print', 'while', 'if', 'int', 'string', 'boolean', 'false', 'true'];
             var symbols = ['{', '}', '(', ')', '"', '=', '==', '!=', '+', '$'];
             //regular expression variables
-            //--how is this id--
             var id_regex = /^[a-z]$/;
-            //--how is this digit--
             var digit_regex = /0|(^[1-9]([0-9])*)$/;
-            //--how is this char--
             var char_regex = /^[a-z]$/;
-            //--why using codeString--
             var codeString = false;
-            //--how is this string--
             var string_regex = /^"[a-z\S]*"$/;
-            //regex for anything in grammar
             var any_regex = /[a-z]+|[1-9]|(==)|(!=)|"[^"]*"|(")|(\/\*[^\/\*]*\*\/)|(\S)|(\n)/g;
-            //comments regex
             var com_RE = /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/;
             ;
             //implementing multiple programs at one execution
@@ -39,7 +32,7 @@ var StallCompiler;
             inputCode = inputCode.trim();
             //check for $ - end of program symbol
             if (inputCode[inputCode.length - 1] != '$') {
-                _Log_.printWarningMessage("Missing $ at end of program");
+                _Log_.printWarningMessage("Missing $ to end program");
                 document.getElementById("inputTextArea").value += '$';
                 inputCode += '$';
             }

@@ -9,10 +9,12 @@ module StallCompiler{
             var Token = new Token(type, value, line);
             return Token;
         }
-        constructor(public type: string, public value: string, public line: number){
-            //this.type = type;
-            //this.value = value;
-            //this.line = line;
+        constructor(public type: string, 
+                        public value: string,
+                            public line: number){
+            this.type = type;
+            this.value = value;
+            this.line = line;
         }
     }
 }
