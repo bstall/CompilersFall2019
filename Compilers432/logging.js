@@ -19,6 +19,18 @@ var StallCompiler;
             var log1 = document.getElementById("outputTextArea");
             log1.value += message + "\n";
         };
+        logs.prototype.logTokens = function () {
+            var tTable = document.getElementById("token_output");
+            for (var i = 0; i < _Tokens_.length; i++) {
+                var row = tTable.insertRow(i + 1);
+                var type = row.insertCell(0);
+                var value = row.insertCell(1);
+                var line = row.insertCell(2);
+                type.innerHTML = _Tokens_[i].type;
+                value.innerHTML = _Tokens_[i].value;
+                line.innerHTML = _Tokens_[i].line;
+            }
+        };
         return logs;
     }());
     StallCompiler.logs = logs;
