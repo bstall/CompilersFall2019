@@ -20,10 +20,6 @@ module StallCompiler{
             sourceCode.value = this.trim(sourceCode.value);
             log1.value = "";
 
-            if (sourceCode.value === '') {
-                _Log_.printMessage("Empty text area.");
-                return;
-            }
             _Lexer_.lexerProgram();
 
             

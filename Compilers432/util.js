@@ -2,7 +2,7 @@
 ///<reference path="lexer.ts" />
 ///<reference path="logging.ts" />
 ///<reference path="token.ts" />
-var StallCompiler;
+//var StallCompiler;
 (function (StallCompiler) {
     var util = /** @class */ (function () {
         function util() {
@@ -19,10 +19,6 @@ var StallCompiler;
             var sourceCode = document.getElementById("inputTextArea");
             sourceCode.value = this.trim(sourceCode.value);
             log1.value = "";
-            if (sourceCode.value === '') {
-                _Log_.printMessage("Empty text area.");
-                return;
-            }
             _Lexer_.lexerProgram();
         };
         //trim whitespace
