@@ -3,6 +3,8 @@
 ///<reference path="logging.ts" />
 ///<reference path="token.ts" />
 
+//import {StallCompiler} from "./lexer";
+
 module StallCompiler{
     export class util{
         public static compile(){

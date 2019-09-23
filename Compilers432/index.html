@@ -10,16 +10,7 @@
 <script type="text/javascript" src="lexer.js"></script>
 
 
-<script type="text/javascript">
-	function init() {
-		document.getElementById("outputTextArea").value = "";
-		document.getElementById("inputTextArea").value = "";
 
-		tokens = "";
-		tIndex = 0;
-		currentToken = '';
-	}
-</script>
 
 <body onload="init()">
 	<div class="container py-2">
@@ -75,7 +66,16 @@
 		</div>
 
 
-
+		<script type="text/javascript">
+			function init() {
+				document.getElementById("outputTextArea").value = "";
+				document.getElementById("inputTextArea").value = "";
+		
+				tokens = "";
+				tIndex = 0;
+				currentToken = '';
+			}
+		</script>
 
 </body>
 
