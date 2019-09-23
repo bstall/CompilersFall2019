@@ -26,8 +26,6 @@ module StallCompiler{
             var any_regex: RegExp = /[a-z]+|[1-9]|(==)|(!=)|"[^"]*"|(")|(\/\*[^\/\*]*\*\/)|(\S)|(\n)/g;
             var com_RE: RegExp = /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/;;
 
-            //implementing multiple programs at one execution
-            var programCount = 1;
 
 
             //get code, trim, split into lines, get length
@@ -181,9 +179,12 @@ module StallCompiler{
                             _Log_.printErrorMessage(" Invalid Token " +"[" + currentToken + "]" + " on line " + x);
                             lexError = lexError + 1;
                         }
+
                     }
                 }
             }
+            _Log_.logTokens();
+            return _Tokens_;
         }
     }
 }

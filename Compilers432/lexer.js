@@ -25,8 +25,6 @@ var StallCompiler;
             var any_regex = /[a-z]+|[1-9]|(==)|(!=)|"[^"]*"|(")|(\/\*[^\/\*]*\*\/)|(\S)|(\n)/g;
             var com_RE = /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/;
             ;
-            //implementing multiple programs at one execution
-            var programCount = 1;
             //get code, trim, split into lines, get length
             var inputCode = document.getElementById("inputTextArea").value;
             inputCode = inputCode.trim();
@@ -171,6 +169,8 @@ var StallCompiler;
                     }
                 }
             }
+            _Log_.logTokens();
+            return _Tokens_;
         };
         return lexer;
     }());
