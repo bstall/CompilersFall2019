@@ -28,7 +28,7 @@ var StallCompiler;
                 var line = row.insertCell(2);
                 type.innerHTML = _Tokens_[i].type;
                 value.innerHTML = _Tokens_[i].value;
-                line.innerHTML = _Tokens_[i].line;
+                line.innerHTML = _Tokens_[i].lines;
             }
         };
         return logs;

@@ -28,7 +28,7 @@ module StallCompiler{
 
                 type.innerHTML = _Tokens_[i].type;
                 value.innerHTML = _Tokens_[i].value;
-                line.innerHTML = _Tokens_[i].line;
+                line.innerHTML = _Tokens_[i].lines;
             }
         }
     }
