@@ -1,6 +1,7 @@
 //file for global variables for Stall Compiler
 
-
+//lexer
+var _S_Lexer = StallCompiler.Lexer;
 //logger
 var _S_Logger = StallCompiler.Logger;
 //list of tokens
