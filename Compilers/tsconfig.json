@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs"
+    },
+    "files": [
+        "globals.ts",
+        "lexer.ts",
+        "logger.ts",
+        "token.ts",
+        "utils.ts"
+    ]
+}
