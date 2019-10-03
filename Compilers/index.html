@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <h1 align="center" style="color:#008CBA;">Stall Compiler</h1>
+    <title>Stall Compiler</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="dist/styles/compiler.css" />
+    <link rel="stylesheet" href="dist/styles/bootstrap.min.css">
+</head>
+<body>
+    <div id="divButtonBar" style="margin:15px;">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="btn btn-primary navbar-btn"
+                            style="margin-left: 5px;"
+                            onclick="TSC.Utils.compile();">
+                        Compile
+                    </button>
+                    <button id="verbose-button" type="button" class="btn btn-success navbar-btn"
+                            style="margin-left: 5px;"
+                            onclick="TSC.Utils.setVerbose();">
+                        Verbose Mode
+                    </button>
+                    
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="source-code-container col-sm-6">
+                <h3 style="padding-left: 10px;">Source Code</h3>
+                <textarea id="source-code" style="resize: none;"></textarea>
+            </div>
+            <div class="log-output-container col-sm-6">
+                <h3 style="padding-left: 10px;">Log</h3>
+                <textarea id="log-output" style="resize: none; border: none" readonly></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="tokens col-sm-6">
+                <h3 style="padding-left: 10px;">Tokens</h3>
+                <div style="overflow:scroll; height:300px;">
+                    <table id="tokens-table" style="width: 100%;"
+                           class="table table-condensed table-hover table-bordered">
+                        <tr>
+                            <th>Type</th>
+                            <th>Value</th>
+                            <th>Line Number</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="symbol-table-container col-sm-6">
+                <h3 style="padding-left: 10px;">Symbol Table</h3>
+                <table id="symbol-table" style="width: 100%;"
+                       class="table table-condensed table-hover table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Scope</th>
+                        <th>Line Number</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        
+    
+
+    <!-- Client-side code down here, per the YSlow advice. 
+         (http://developer.yahoo.com/performance/rules.html#js_bottom) -->
+    <script type="text/javascript" src="dist/scripts/utils.js"></script>	
+    <script type="text/javascript" src="dist/scripts/lexer.js"></script>
+    <script type="text/javascript" src="dist/scripts/parser.js"></script>
+    <script type="text/javascript" src="dist/scripts/logger.js"></script>
+    <script type="text/javascript" src="dist/scripts/token.js"></script>
+	<script type="text/javascript" src="dist/scripts/globals.js"></script>
+</body>
+</html>
