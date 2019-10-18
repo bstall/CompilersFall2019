@@ -77,7 +77,26 @@ module StallCompiler {
         public setLineNumber(number: number): void {
             this.lineNumber = number;
         }
-        
+        //leaf nodes
+        public checkLeafNode(): boolean {
+            return this.isLeafNode;
+        }
+        public setLeafNode(bool: boolean): void {
+            this.isLeafNode = bool;
+        }
+
+        //method to push children onto node
+        public addChild(node: Node): void {
+            this.children.push(node);
+        }
+        //parent nodes
+        public getParent(): Node {
+            return this.parent;
+        }
+
+        public setParent(parent: Node): void {
+            this.parent = parent;
+        }
 
         
     }
