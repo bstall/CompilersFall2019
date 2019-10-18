@@ -2,7 +2,6 @@
 
 module StallCompiler {
     export class Token {
-        //constructor for Token class
         constructor(public type: string, public value: string, public line: number) {
             this.type = type;
             this.value = value;

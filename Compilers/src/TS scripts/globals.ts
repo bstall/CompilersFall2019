@@ -12,14 +12,16 @@ var _CurrentToken: StallCompiler.Token = null;
 var _TokenIndex: number = 0;
 //boolean for verbose mode of compiler
 var _VerboseMode: boolean = true;
+//tree for cst output of parse
+var _CST: StallCompiler.Tree = null;
 
 //variables for types of tokens
 const L_BRACE       = {type: 'LEFT_BRACE', value: '{'};
-const R_BRACE      = {type: 'RIGHT_BRACE', value: '}'};
+const R_BRACE       = {type: 'RIGHT_BRACE', value: '}'};
 const L_PAREN       = {type: 'LEFT_PAREN', value: '('};
-const R_PAREN      = {type: 'RIGHT_PAREN', value: ')'};
+const R_PAREN       = {type: 'RIGHT_PAREN', value: ')'};
 
-const ASSIGNMENT       = {type: 'ASSIGNMENT', value: '='};
+const ASSIGNMENT        = {type: 'ASSIGNMENT', value: '='};
 const EQUALS            = {type: 'EQUAL', value: '=='};
 const NOT_EQUALS        = {type: 'NOT_EQUAL', value: '!='};
 
@@ -28,7 +30,7 @@ const WHILE            = {type: 'WHILE', value: 'while'};
 const IF               = {type: 'IF', value: 'if'};
 const INT              = {type: 'INT', value: 'int'};
 const STRING           = {type: 'STRING', value: 'string'};
-const BOOL          = {type: 'BOOLEAN', value: 'boolean'};
+const BOOL             = {type: 'BOOLEAN', value: 'boolean'};
 const TRUE             = {type: 'TRUE', value: 'true'};
 const FALSE            = {type: 'FALSE', value: 'false'};
 

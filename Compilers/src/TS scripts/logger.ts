@@ -42,6 +42,10 @@ module StallCompiler {
                 line.innerHTML = _Tokens[x].line;
             }
         }
+        public static logCST(): void {
+            var log = <HTMLTextAreaElement> document.getElementById('cst-output');
+            log.value = _CST.toString();
+        }
 
 
         //exception to log when not in verbose mode
