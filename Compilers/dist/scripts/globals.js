@@ -3,6 +3,8 @@
 var _S_Lexer = StallCompiler.Lexer;
 //logger
 var _S_Logger = StallCompiler.Logger;
+//parser
+var _S_Parser = StallCompiler.Parser;
 //list of tokens
 var _Tokens = [];
 //current token variable
@@ -11,6 +13,8 @@ var _CurrentToken = null;
 var _TokenIndex = 0;
 //boolean for verbose mode of compiler
 var _VerboseMode = true;
+//tree for cst output of parse
+var _CST = null;
 //variables for types of tokens
 var L_BRACE = { type: 'LEFT_BRACE', value: '{' };
 var R_BRACE = { type: 'RIGHT_BRACE', value: '}' };

@@ -38,6 +38,10 @@ var StallCompiler;
                 line.innerHTML = _Tokens[x].line;
             }
         };
+        Logger.logCST = function () {
+            var log = document.getElementById('cst-output');
+            log.value = _CST.toString();
+        };
         //exception to log when not in verbose mode
         Logger.logIgnoreVMode = function (message) {
             var log = document.getElementById("log-output");

@@ -1,4 +1,5 @@
 ///<reference path='globals.ts' />
+///<reference path='tree.ts' />
 
 //Utility functions for Stall Compiler
 
@@ -13,7 +14,7 @@ module StallCompiler {
             _VerboseMode = !_VerboseMode;
         }
 
-public static compile() {
+        public static compile() {
             var log: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("log-output");
             var source: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("source-code");
             source.value = this.trim(source.value);
@@ -37,6 +38,12 @@ public static compile() {
             _S_Lexer.lex();
 
             _S_Logger.logIgnoreVMode("Lexing successful.");
+            //parse multiple programs
+            while (_TokenIndex < _Tokens.length) {
+                _S_Parser.parse();
+                _S_Logger.logIgnoreVMode("Completed parsing program.");
+            }
+            _S_Logger.logCST();
 
         }
 

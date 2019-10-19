@@ -4,6 +4,8 @@
 var _S_Lexer = StallCompiler.Lexer;
 //logger
 var _S_Logger = StallCompiler.Logger;
+//parser
+var _S_Parser = StallCompiler.Parser;
 //list of tokens
 var _Tokens = [];
 //current token variable
