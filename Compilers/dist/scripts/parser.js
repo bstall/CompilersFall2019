@@ -1,4 +1,5 @@
 //main file for parse
+///<reference path='tree.js' />
 var StallCompiler;
 (function (StallCompiler) {
     var Parser = /** @class */ (function () {
@@ -7,13 +8,13 @@ var StallCompiler;
         //initializes parse
         Parser.parse = function () {
             _CurrentToken = _Tokens[_TokenIndex];
-            _CST = new Tree();
+            _CST = new StallCompiler.Tree();
             this.parseProgram();
         };
         //start with largest structures and recursively make parse calls
         //each parse call adds a node to the cst
         Parser.parseProgram = function () {
-            Logger.logIgnoreVMode("\nParsing program.\n");
+            _S_Logger.logIgnoreVMode("\nParsing program.\n");
             _CST.addBranchNode("Program");
             this.parseBlock();
             this.match(END_OF_PROGRAM.type);
@@ -103,7 +104,7 @@ var StallCompiler;
                     this.parseId();
                     break;
                 default:
-                    Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser');
+                    _S_Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser');
                     throw new Error("Something broken in parser.");
             }
             _CST.endChildren();
@@ -144,7 +145,7 @@ var StallCompiler;
                     this.parseId();
                     break;
                 default:
-                    Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser');
+                    _S_Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser');
                     throw new Error("Something broken in parser.");
             }
             _CST.endChildren();
@@ -214,11 +215,11 @@ var StallCompiler;
         Parser.match = function (type) {
             if (_CurrentToken.type === type) {
                 _CST.addLeafNode(_CurrentToken);
-                Logger.logMessage("Successfully matched " + type + " token.");
+                _S_Logger.logMessage("Successfully matched " + type + " token.");
             }
             else {
                 //helpful error messages
-                Logger.logError("Expected " + type + ", found " + _CurrentToken.type, _CurrentToken.line, 'Parser');
+                _S_Logger.logError("Expected " + type + ", found " + _CurrentToken.type, _CurrentToken.line, 'Parser');
                 throw new Error("Error in Parse. Stopping execution.");
             }
             if (_TokenIndex < _Tokens.length) {

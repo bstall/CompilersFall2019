@@ -1,4 +1,5 @@
 //main file for parse
+///<reference path='tree.ts' />
 module StallCompiler {
     export class Parser {
         //initializes parse
@@ -11,7 +12,7 @@ module StallCompiler {
         //start with largest structures and recursively make parse calls
         //each parse call adds a node to the cst
         public static parseProgram() {
-            Logger.logIgnoreVMode("\nParsing program.\n");
+            _S_Logger.logIgnoreVMode("\nParsing program.\n");
             _CST.addBranchNode("Program");
 
             this.parseBlock();
@@ -118,7 +119,7 @@ module StallCompiler {
                     this.parseId();
                     break;
                 default:
-                    Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser')
+                    _S_Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser')
                     throw new Error("Something broken in parser.");
             }
             _CST.endChildren();
@@ -166,7 +167,7 @@ module StallCompiler {
                     this.parseId();
                     break;
                 default:
-                    Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser')
+                    _S_Logger.logError("Mistakes were made, should not have gotten here.", _CurrentToken.line, 'Parser')
                     throw new Error("Something broken in parser.");
             }
             _CST.endChildren();
@@ -246,10 +247,10 @@ module StallCompiler {
             if (_CurrentToken.type === type) {
 
                 _CST.addLeafNode(_CurrentToken);
-                Logger.logMessage("Successfully matched " + type + " token.");
+                _S_Logger.logMessage("Successfully matched " + type + " token.");
             } else {
                 //helpful error messages
-                Logger.logError("Expected " + type + ", found " + _CurrentToken.type, _CurrentToken.line, 'Parser');
+                _S_Logger.logError("Expected " + type + ", found " + _CurrentToken.type, _CurrentToken.line, 'Parser');
                 throw new Error("Error in Parse. Stopping execution.");
             }
 
