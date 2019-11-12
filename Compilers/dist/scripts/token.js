@@ -2,7 +2,6 @@
 var StallCompiler;
 (function (StallCompiler) {
     var Token = /** @class */ (function () {
-        //constructor for Token class
         function Token(type, value, line) {
             this.type = type;
             this.value = value;

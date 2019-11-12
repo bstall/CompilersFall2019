@@ -75,6 +75,31 @@ var StallCompiler;
             expand(this.root, 0);
             return traversalResult;
         };
+        Tree.prototype.toStringAST = function () {
+            var traversalResult = "";
+            //handles node expansion
+            function expand(node, depth) {
+                //attempt to space it out and appear more like a tree
+                for (var i = 0; i < depth; i++) {
+                    traversalResult += "-";
+                }
+                if (!node.children || node.children.length === 0) {
+                    //keeps track of leaf node
+                    traversalResult += "[ " + node.type + " ]";
+                    traversalResult += "\n";
+                }
+                else {
+                    //expand branch nodes
+                    traversalResult += "< " + node.type + " > \n";
+                    for (var i = 0; i < node.children.length; i++) {
+                        expand(node.children[i], depth + 1);
+                    }
+                }
+            }
+            //expand from the root.
+            expand(this.root, 0);
+            return traversalResult;
+        };
         return Tree;
     }());
     StallCompiler.Tree = Tree;
