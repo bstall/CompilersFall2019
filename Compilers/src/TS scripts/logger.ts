@@ -1,4 +1,4 @@
-//file for outputting information during lexing
+//file for outputting information during compilation
 
 module StallCompiler {
     export class Logger {
@@ -45,21 +45,23 @@ module StallCompiler {
         public static logCST(): void {
             var log = <HTMLTextAreaElement> document.getElementById('cst-output');
             log.value = _CST.toString();
-        }
-        public printParseMessage(message: string): void{
-            var log = <HTMLTextAreaElement> document.getElementById("log-output");
-            log.value += message + "\n";
-        }
+        } 
+        //trying to get output properly formatted
 
-        public printParseError(message: string): void{
-            var log = <HTMLTextAreaElement> document.getElementById("log-output");
-            log.value += "ERROR: " + message + "\n";
-        }
+        // public printParseMessage(message: string): void{
+        //     var log = <HTMLTextAreaElement> document.getElementById("log-output");
+        //     log.value += message + "\n";
+        // }
 
-        public printParseComplete(){
-            var log = <HTMLTextAreaElement> document.getElementById("log-output");
-            log.value += "Parse Completed" + "\n";
-        }
+        // public printParseError(message: string): void{
+        //     var log = <HTMLTextAreaElement> document.getElementById("log-output");
+        //     log.value += "ERROR: " + message + "\n";
+        // }
+
+        // public printParseComplete(){
+        //     var log = <HTMLTextAreaElement> document.getElementById("log-output");
+        //     log.value += "Parse Completed" + "\n";
+        // }
 
 
         //exception to log when not in verbose mode

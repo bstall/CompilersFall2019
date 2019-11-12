@@ -12,7 +12,7 @@ module StallCompiler {
         //start with largest structures and recursively make parse calls
         //each parse call adds a node to the cst
         public static parseProgram() {
-            _S_Logger.logIgnoreVMode("\nParsing program.\n");
+            _S_Logger.logMessage("\nParsing program.\n");
             _CST.addBranchNode("Program");
 
             this.parseBlock();
@@ -22,6 +22,7 @@ module StallCompiler {
 
         public static parseBlock() {
             _CST.addBranchNode("Block");
+            _S_Logger.logMessage("\nParsing block.\n");
 
             this.match(L_BRACE.type);
             this.parseStatementList();
@@ -42,6 +43,7 @@ module StallCompiler {
                 _CurrentToken.type === IF.type
             ) {
                 _CST.addBranchNode("Statement List");
+                _S_Logger.logMessage("\nParsing statement list.\n");
 
                 this.parseStatement();
                 this.parseStatementList();
@@ -52,6 +54,7 @@ module StallCompiler {
 
         public static parseStatement() {
             _CST.addBranchNode("Statement");
+            _S_Logger.logMessage("\nParsing statement.\n");
 
             //different token types call different parses
             switch (_CurrentToken.type) {
@@ -80,6 +83,7 @@ module StallCompiler {
 
         public static parsePrintStatement() {
             _CST.addBranchNode("Print Statement");
+            _S_Logger.logMessage("\nParsing print statement.\n");
 
             //finds print, parentheses and parses expression 
             this.match(PRINT.type);
@@ -92,6 +96,7 @@ module StallCompiler {
 
         public static parseAssignmentStatement() {
             _CST.addBranchNode("Assignment Statement");
+            _S_Logger.logMessage("\nParsing assignment statement.\n");
 
             //parses ID, finds assignments, parses the expression following
             this.parseId();
@@ -103,6 +108,7 @@ module StallCompiler {
 
         public static parseVarDecl() {
             _CST.addBranchNode("Variable Declaration");
+            _S_Logger.logMessage("\nParsing vardecl.\n");
 
             //variable declarations for different tokent types, parses ID
             switch (_CurrentToken.type) {
@@ -128,6 +134,7 @@ module StallCompiler {
 
         public static parseWhileStatement() {
             _CST.addBranchNode("While Statement");
+            _S_Logger.logMessage("\nParsing while statement.\n");
 
             //finds while token, parses for boolean, then parses for block
             //same structure for the other statement types
@@ -139,6 +146,7 @@ module StallCompiler {
 
         public static parseIfStatement() {
             _CST.addBranchNode("If Statement");
+            _S_Logger.logMessage("\nParsing if statement.\n");
 
             this.match(IF.type);
             this.parseBooleanExpr();
@@ -149,6 +157,7 @@ module StallCompiler {
         //parseExpr calls specific type expr parses
         public static parseExpr() {
             _CST.addBranchNode("Expression");
+            _S_Logger.logMessage("\nParsing expression.\n");
 
             //handles all the different types of expressions
             switch (_CurrentToken.type) {
@@ -175,6 +184,7 @@ module StallCompiler {
 
         public static parseIntExpr() {
             _CST.addBranchNode("Int Expression");
+            _S_Logger.logMessage("\nParsing int expr.\n");
 
             if (_CurrentToken.type === DIGIT.type) {
                 this.match(DIGIT.type);
@@ -188,6 +198,7 @@ module StallCompiler {
 
         public static parseStringExpr() {
             _CST.addBranchNode("String Expression");
+            _S_Logger.logMessage("\nParsing string expr.\n");
 
             this.match(QUOTE.type);
             this.parseCharList();
@@ -197,6 +208,7 @@ module StallCompiler {
 
         public static parseBooleanExpr() {
             _CST.addBranchNode("Boolean Expression");
+            _S_Logger.logMessage("\nParsing boolean expr.\n");
 
             if (_CurrentToken.type === TRUE.type) {
                 this.match(TRUE.type);
@@ -221,12 +233,14 @@ module StallCompiler {
 
         public static parseId() {
             _CST.addBranchNode("Identifier");
+            _S_Logger.logMessage("\nParsing ID.\n");
 
             this.match(IDENTIFIER.type);
             _CST.endChildren();
         }
 
         public static parseCharList() {
+            _S_Logger.logMessage("\nParsing char list.\n");
             if (_CurrentToken.type === CHARACTER.type) {
                 _CST.addBranchNode("Char List");
 
