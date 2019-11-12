@@ -14,7 +14,7 @@ var StallCompiler;
         //start with largest structures and recursively make parse calls
         //each parse call adds a node to the cst
         Parser.parseProgram = function () {
-            _S_Logger.logMessage("\nParsing program.\n");
+            _S_Logger.logMessage("\nParsing program.");
             _CST.addBranchNode("Program");
             this.parseBlock();
             this.match(END_OF_PROGRAM.type);
@@ -22,7 +22,7 @@ var StallCompiler;
         };
         Parser.parseBlock = function () {
             _CST.addBranchNode("Block");
-            _S_Logger.logMessage("\nParsing block.\n");
+            _S_Logger.logMessage("\nParsing block.");
             this.match(L_BRACE.type);
             this.parseStatementList();
             this.match(R_BRACE.type);
@@ -39,7 +39,7 @@ var StallCompiler;
                 _CurrentToken.type === WHILE.type ||
                 _CurrentToken.type === IF.type) {
                 _CST.addBranchNode("Statement List");
-                _S_Logger.logMessage("\nParsing statement list.\n");
+                _S_Logger.logMessage("\nParsing statement list.");
                 this.parseStatement();
                 this.parseStatementList();
                 _CST.endChildren();
@@ -48,7 +48,7 @@ var StallCompiler;
         };
         Parser.parseStatement = function () {
             _CST.addBranchNode("Statement");
-            _S_Logger.logMessage("\nParsing statement.\n");
+            _S_Logger.logMessage("\nParsing statement.");
             //different token types call different parses
             switch (_CurrentToken.type) {
                 case PRINT.type:
@@ -75,7 +75,7 @@ var StallCompiler;
         };
         Parser.parsePrintStatement = function () {
             _CST.addBranchNode("Print Statement");
-            _S_Logger.logMessage("\nParsing print statement.\n");
+            _S_Logger.logMessage("\nParsing print statement.");
             //finds print, parentheses and parses expression 
             this.match(PRINT.type);
             this.match(L_PAREN.type);
@@ -85,7 +85,7 @@ var StallCompiler;
         };
         Parser.parseAssignmentStatement = function () {
             _CST.addBranchNode("Assignment Statement");
-            _S_Logger.logMessage("\nParsing assignment statement.\n");
+            _S_Logger.logMessage("\nParsing assignment statement.");
             //parses ID, finds assignments, parses the expression following
             this.parseId();
             this.match(ASSIGNMENT.type);
@@ -94,7 +94,7 @@ var StallCompiler;
         };
         Parser.parseVarDecl = function () {
             _CST.addBranchNode("Variable Declaration");
-            _S_Logger.logMessage("\nParsing vardecl.\n");
+            _S_Logger.logMessage("\nParsing vardecl.");
             //variable declarations for different tokent types, parses ID
             switch (_CurrentToken.type) {
                 case STRING.type:
@@ -117,7 +117,7 @@ var StallCompiler;
         };
         Parser.parseWhileStatement = function () {
             _CST.addBranchNode("While Statement");
-            _S_Logger.logMessage("\nParsing while statement.\n");
+            _S_Logger.logMessage("\nParsing while statement.");
             //finds while token, parses for boolean, then parses for block
             //same structure for the other statement types
             this.match(WHILE.type);
@@ -127,7 +127,7 @@ var StallCompiler;
         };
         Parser.parseIfStatement = function () {
             _CST.addBranchNode("If Statement");
-            _S_Logger.logMessage("\nParsing if statement.\n");
+            _S_Logger.logMessage("\nParsing if statement.");
             this.match(IF.type);
             this.parseBooleanExpr();
             this.parseBlock();
@@ -136,7 +136,7 @@ var StallCompiler;
         //parseExpr calls specific type expr parses
         Parser.parseExpr = function () {
             _CST.addBranchNode("Expression");
-            _S_Logger.logMessage("\nParsing expression.\n");
+            _S_Logger.logMessage("\nParsing expression.");
             //handles all the different types of expressions
             switch (_CurrentToken.type) {
                 case DIGIT.type:
@@ -161,7 +161,7 @@ var StallCompiler;
         };
         Parser.parseIntExpr = function () {
             _CST.addBranchNode("Int Expression");
-            _S_Logger.logMessage("\nParsing int expr.\n");
+            _S_Logger.logMessage("\nParsing int expr.");
             if (_CurrentToken.type === DIGIT.type) {
                 this.match(DIGIT.type);
                 if (_CurrentToken.type === PLUS.type) {
@@ -173,7 +173,7 @@ var StallCompiler;
         };
         Parser.parseStringExpr = function () {
             _CST.addBranchNode("String Expression");
-            _S_Logger.logMessage("\nParsing string expr.\n");
+            _S_Logger.logMessage("\nParsing string expr.");
             this.match(QUOTE.type);
             this.parseCharList();
             this.match(QUOTE.type);
@@ -181,7 +181,7 @@ var StallCompiler;
         };
         Parser.parseBooleanExpr = function () {
             _CST.addBranchNode("Boolean Expression");
-            _S_Logger.logMessage("\nParsing boolean expr.\n");
+            _S_Logger.logMessage("\nParsing boolean expr.");
             if (_CurrentToken.type === TRUE.type) {
                 this.match(TRUE.type);
             }
@@ -206,12 +206,12 @@ var StallCompiler;
         };
         Parser.parseId = function () {
             _CST.addBranchNode("Identifier");
-            _S_Logger.logMessage("\nParsing ID.\n");
+            _S_Logger.logMessage("\nParsing ID.");
             this.match(IDENTIFIER.type);
             _CST.endChildren();
         };
         Parser.parseCharList = function () {
-            _S_Logger.logMessage("\nParsing char list.\n");
+            _S_Logger.logMessage("\nParsing char list.");
             if (_CurrentToken.type === CHARACTER.type) {
                 _CST.addBranchNode("Char List");
                 this.match(CHARACTER.type);
