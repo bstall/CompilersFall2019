@@ -41,7 +41,7 @@ var StallCompiler;
                 _S_Parser.parse();
                 _S_Logger.logIgnoreVMode("Completed parsing program.");
             }
-            _S_Logger.logCST();
+            //_S_Logger.logCST();
         };
         //trims whitespace
         Utils.trim = function (str) {
