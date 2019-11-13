@@ -22,7 +22,7 @@ module StallCompiler {
 
         //functions to add different types of nodes
         public addBranchNode(type: string): void {
-            var node: Node = new Node();
+            var node: StallCompiler.Node = new Node();
             node.setType(type);
 
             if (this.root === null || (!this.root)) {

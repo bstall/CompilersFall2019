@@ -16,8 +16,11 @@ var StallCompiler;
         Utils.compile = function () {
             var log = document.getElementById("log-output");
             var source = document.getElementById("source-code");
+            //adding cst variable to clear cst output after each run
+            var cstVal = document.getElementById("cst-output");
             source.value = this.trim(source.value);
             log.value = "";
+            cstVal.value = "";
             //resets global variables
             _Tokens = [];
             _CurrentToken = null;

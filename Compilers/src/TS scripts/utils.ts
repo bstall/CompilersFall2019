@@ -17,8 +17,11 @@ module StallCompiler {
         public static compile() {
             var log: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("log-output");
             var source: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("source-code");
+            //adding cst variable to clear cst output after each run
+            var cstVal: HTMLTextAreaElement = <HTMLTextAreaElement> document.getElementById("cst-output");
             source.value = this.trim(source.value);
             log.value = "";
+            cstVal.value = "";
 
             //resets global variables
             _Tokens = [];
