@@ -6,7 +6,7 @@ module StallCompiler{
         private children: Scope[] = [];
         private parent: Scope[] = null;
 
-        //method to set name, called by constructor
+        //name methods
         public setName(name: number): void {
             this.name = name;
         }
@@ -16,8 +16,37 @@ module StallCompiler{
         public nameAsString(): string {
             return this.name.toString();
         }
-        public NameAsInt(): number {
+        public nameAsInt(): number {
             return this.name;
+        }
+
+        //symbol methods
+        public getAllSymbols(): Symbol[] {
+            return this.symbols;
+        }
+        //scope methods
+        public findIdentifierInCurrentScope(id: string): boolean {
+            for (var i = 0; i < this.symbols.length; i++) {
+                if (this.symbols[i].getName() === id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public addSymbol(symbol: Symbol): void {
+
+            var id = symbol.getName();
+            var checkScope = this.findIdentifierInCurrentScope(id);
+
+            if (!checkScope) {
+                this.symbols.push(symbol);
+            } else {
+                //not sure if reassignment in current scope legal in our grammar
+                //using this as placeholder
+                _S_Logger.logError("Identifier '" + id + "' already declared in current scope.", parseInt(symbol.getLine()), "Semantic Analysis");
+                throw new Error("ID already in scope");
+            }
         }
     }
 }
