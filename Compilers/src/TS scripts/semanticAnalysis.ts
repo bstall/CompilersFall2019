@@ -31,8 +31,6 @@ module StallCompiler{
 
         public static semAnalyzeBlock(cstNode: Node, scope: Scope, astNode?: Node): void {
             var newNode = new Node("Block");
-
-            
             if (this.AST.getRoot() != null) {
                 astNode.addChild(newNode);
                 astNode = newNode;
@@ -55,6 +53,17 @@ module StallCompiler{
                     this.semAnalyzeStatementList(cstNode.children[1], astNode, scope)
                 }
             }
+        }
+
+        public static semAnalyzeStatementList(cstNode: Node, astNode: Node, scope: Scope): void {
+            //statement list doesn't get a node on ast
+            
+            //epsilon
+            if (!cstNode) {
+                return;
+            }
+            this.semAnalyzeStatement(cstNode.children[0], astNode, scope);
+            this.semAnalyzeStatementList(cstNode.children[1], astNode, scope);
         }
         
     }
