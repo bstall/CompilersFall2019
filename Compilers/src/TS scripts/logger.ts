@@ -44,7 +44,9 @@ module StallCompiler {
         }
         public static logCST(): void {
             var log = <HTMLTextAreaElement> document.getElementById('cst-output');
-            log.value = _CST.toString();
+            log.value += _CST.toString();
+            log.value += "\n";
+
         } 
         //trying to get output properly formatted
 

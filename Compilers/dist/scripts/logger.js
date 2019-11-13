@@ -40,7 +40,8 @@ var StallCompiler;
         };
         Logger.logCST = function () {
             var log = document.getElementById('cst-output');
-            log.value = _CST.toString();
+            log.value += _CST.toString();
+            log.value += "\n";
         };
         //trying to get output properly formatted
         // public printParseMessage(message: string): void{

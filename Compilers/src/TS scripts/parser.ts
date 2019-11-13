@@ -7,6 +7,7 @@ module StallCompiler {
             _CurrentToken = _Tokens[_TokenIndex];
             _CST = new Tree();
             this.parseProgram();
+            _S_Logger.logCST();
         }
 
         //start with largest structures and recursively make parse calls

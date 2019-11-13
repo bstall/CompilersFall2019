@@ -10,6 +10,7 @@ var StallCompiler;
             _CurrentToken = _Tokens[_TokenIndex];
             _CST = new StallCompiler.Tree();
             this.parseProgram();
+            _S_Logger.logCST();
         };
         //start with largest structures and recursively make parse calls
         //each parse call adds a node to the cst
