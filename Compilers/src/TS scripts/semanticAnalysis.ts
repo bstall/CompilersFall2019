@@ -36,10 +36,12 @@ module StallCompiler{
                 astNode = newNode;
 
                 var newScope = new Scope(this.scopeNum);
+                //logs scope creation
                 _S_Logger.logMessage("Created Scope " + newScope.nameAsString() + ".");
                 this.scopeNum++;
                 newScope.setParent(scope);
                 this.scopes.push(newScope);
+
                 if (cstNode.children.length > 2) {
                     this.semAnalyzeStatementList(cstNode.children[1], astNode, newScope)
                 }
@@ -57,13 +59,42 @@ module StallCompiler{
 
         public static semAnalyzeStatementList(cstNode: Node, astNode: Node, scope: Scope): void {
             //statement list doesn't get a node on ast
-            
+
             //epsilon
             if (!cstNode) {
                 return;
             }
+
+            //statement then statement list according to grammar
             this.semAnalyzeStatement(cstNode.children[0], astNode, scope);
             this.semAnalyzeStatementList(cstNode.children[1], astNode, scope);
+        }
+        //
+        public static semAnalyzeStatement(cstNode: Node, astNode: Node, scope: Scope): void {
+            switch (cstNode.children[0].getType()) {
+                //to do - develop methods for different statement types
+                case "Print Statement":
+                    this.semAnalyzePrintStatement(cstNode.children[0], astNode, scope);
+                    break;
+                case "Assignment Statement":
+                    this.semAnalyzeAssignmentStatement(cstNode.children[0], astNode, scope);
+                    break;
+                case "Variable Declaration":
+                    this.semAnalyzeVariableDeclaration(cstNode.children[0], astNode, scope);
+                    break;
+                case "While Statement":
+                    this.semAnalyzeWhileStatement(cstNode.children[0], astNode, scope);
+                    break;
+                case "If Statement":
+                    this.semAnalyzeIfStatement(cstNode.children[0], astNode, scope);
+                    break;
+                case "Block":
+                    this.semAnalyzeBlock(cstNode.children[0], scope, astNode);
+                    break;
+                default:
+                    _S_Logger.logError("Statement undefined.", cstNode.getLineNumber(), "Semantic Analysis");
+                    throw new Error("Undefined statement, should not have gotten into statement analysis.");
+            }
         }
         
     }
