@@ -29,11 +29,12 @@ module StallCompiler{
             this.semAnalyzeBlock(node.children[0], newScope);
         }
 
-        public static semAnalyzeBlock(cstNode: Node, scope: Scope, astNode?: Node): void {
+        public static semAnalyzeBlock(concreteNode: Node, scope: Scope, abstractNode?: Node): void {
+            //titles ast node
             var newNode = new Node("Block");
             if (this.AST.getRoot() != null) {
-                astNode.addChild(newNode);
-                astNode = newNode;
+                abstractNode.addChild(newNode);
+                abstractNode = newNode;
 
                 var newScope = new Scope(this.scopeNum);
                 //logs scope creation
@@ -42,59 +43,68 @@ module StallCompiler{
                 newScope.setParent(scope);
                 this.scopes.push(newScope);
 
-                if (cstNode.children.length > 2) {
-                    this.semAnalyzeStatementList(cstNode.children[1], astNode, newScope)
+                if (concreteNode.children.length > 2) {
+                    this.semAnalyzeStatementList(concreteNode.children[1], abstractNode, newScope)
                 }
 
             } else {
                 this.AST.setRoot(newNode);
-                astNode = newNode;
+                abstractNode = newNode;
 
                 this.scopes.push(scope);
-                if (cstNode.children.length > 2) {
-                    this.semAnalyzeStatementList(cstNode.children[1], astNode, scope)
+                if (concreteNode.children.length > 2) {
+                    this.semAnalyzeStatementList(concreteNode.children[1], abstractNode, scope)
                 }
             }
         }
 
-        public static semAnalyzeStatementList(cstNode: Node, astNode: Node, scope: Scope): void {
+        public static semAnalyzeStatementList(concreteNode: Node, abstractNode: Node, scope: Scope): void {
             //statement list doesn't get a node on ast
 
             //epsilon
-            if (!cstNode) {
+            if (!concreteNode) {
                 return;
             }
 
             //statement then statement list according to grammar
-            this.semAnalyzeStatement(cstNode.children[0], astNode, scope);
-            this.semAnalyzeStatementList(cstNode.children[1], astNode, scope);
+            this.semAnalyzeStatement(concreteNode.children[0], abstractNode, scope);
+            this.semAnalyzeStatementList(concreteNode.children[1], abstractNode, scope);
         }
-        //
-        public static semAnalyzeStatement(cstNode: Node, astNode: Node, scope: Scope): void {
-            switch (cstNode.children[0].getType()) {
+        //switch/case for varying stmt types
+        public static semAnalyzeStatement(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            switch (concreteNode.children[0].getType()) {
                 //to do - develop methods for different statement types
                 case "Print Statement":
-                    this.semAnalyzePrintStatement(cstNode.children[0], astNode, scope);
+                    this.semAnalyzePrintStatement(concreteNode.children[0], abstractNode, scope);
                     break;
                 case "Assignment Statement":
-                    this.semAnalyzeAssignmentStatement(cstNode.children[0], astNode, scope);
+                    this.semAnalyzeAssignmentStatement(concreteNode.children[0], abstractNode, scope);
                     break;
                 case "Variable Declaration":
-                    this.semAnalyzeVariableDeclaration(cstNode.children[0], astNode, scope);
+                    this.semAnalyzeVariableDeclaration(concreteNode.children[0], abstractNode, scope);
                     break;
                 case "While Statement":
-                    this.semAnalyzeWhileStatement(cstNode.children[0], astNode, scope);
+                    this.semAnalyzeWhileStatement(concreteNode.children[0], abstractNode, scope);
                     break;
                 case "If Statement":
-                    this.semAnalyzeIfStatement(cstNode.children[0], astNode, scope);
+                    this.semAnalyzeIfStatement(concreteNode.children[0], abstractNode, scope);
                     break;
                 case "Block":
-                    this.semAnalyzeBlock(cstNode.children[0], scope, astNode);
+                    this.semAnalyzeBlock(concreteNode.children[0], scope, abstractNode);
                     break;
                 default:
-                    _S_Logger.logError("Statement undefined.", cstNode.getLineNumber(), "Semantic Analysis");
+                    //if nothing else, throw error
+                    _S_Logger.logError("Statement undefined.", concreteNode.getLineNumber(), "Semantic Analysis");
                     throw new Error("Undefined statement, should not have gotten into statement analysis.");
             }
+        }
+        public static semAnalyzePrintStatement(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            var newNode = new Node("Print");
+
+            abstractNode.addChild(newNode);
+            abstractNode = newNode;
+            
+            this.semAnalyzeExpression(concreteNode.children[2], abstractNode, scope);
         }
         
     }
