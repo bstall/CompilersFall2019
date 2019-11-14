@@ -179,6 +179,34 @@ module StallCompiler{
         }
 
         //to-do: expression methods
+        //expression has similar structure to statements/list
+        public static semAnalyzeExpression(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            switch (concreteNode.children[0].getType()) {
+                case "Int Expression":
+                    this.semAnalyzeIntExpr(concreteNode.children[0], abstractNode, scope);
+                    break;
+                case "String Expression":
+                    this.semAnalyzeStrExpr(concreteNode.children[0], abstractNode, scope);
+                    break;
+                case "Boolean Expression":
+                    this.semAnalyzeBoolExpr(concreteNode.children[0], abstractNode, scope);
+                    break;
+                case "Identifier":
+                    var id = new Node(concreteNode.children[0].children[0].getValue());
+                    id.setIdentifier(true);
+                    abstractNode.addChild(id);
+                    var search = scope.findIdentifier(concreteNode.children[0].children[0].getValue());
+                    if (!search) {
+                        _S_Logger.logError("Id '" + concreteNode.children[0].children[0].getValue() + "' not found.",
+                                         concreteNode.children[0].children[0].getLineNumber(), "Semantic Analysis");
+                        throw new Error("ID not found.");
+                    }
+                    break;
+                default:
+                    _S_Logger.logError("Undefined expression.", concreteNode.getLineNumber(), "Semantic Analysis");
+                    throw new Error("Undefined expression. Shouldn't have been sent here.");
+            }
+        }
         
     }
 
