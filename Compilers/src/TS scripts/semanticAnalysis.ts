@@ -73,7 +73,6 @@ module StallCompiler{
         //switch/case for varying stmt types
         public static semAnalyzeStatement(concreteNode: Node, abstractNode: Node, scope: Scope): void {
             switch (concreteNode.children[0].getType()) {
-                //to do - develop methods for different statement types
                 case "Print Statement":
                     this.semAnalyzePrintStatement(concreteNode.children[0], abstractNode, scope);
                     break;
@@ -98,14 +97,88 @@ module StallCompiler{
                     throw new Error("Undefined statement, should not have gotten into statement analysis.");
             }
         }
+        //in order of grammar productions
+        //print
         public static semAnalyzePrintStatement(concreteNode: Node, abstractNode: Node, scope: Scope): void {
             var newNode = new Node("Print");
 
             abstractNode.addChild(newNode);
             abstractNode = newNode;
-            
+
             this.semAnalyzeExpression(concreteNode.children[2], abstractNode, scope);
         }
+
+        //assign
+        public static semAnalyzeAssignmentStatement(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            var newNode = new Node("Assignment");
+            //adds id
+            var id = new Node(concreteNode.children[0].children[0].getValue());
+            newNode.addChild(id);
+            newNode.setLineNumber(concreteNode.children[0].children[0].getLineNumber());
+            abstractNode.addChild(newNode);
+            abstractNode = newNode;
+
+            this.semAnalyzeExpression(concreteNode.children[2], abstractNode, scope);
+
+            //existence check
+            _S_Logger.logMessage("Checking for id '" + concreteNode.children[0].children[0].getValue() + "' in scope " + scope.nameAsString() + ".");
+            //gets scope
+            var scopeCheck = scope.findIdentifier(concreteNode.children[0].children[0].getValue());
+            if (!scopeCheck) {
+                _S_Logger.logError("Id '" + concreteNode.children[0].children[0].getValue() + "' not in scope.", abstractNode.getLineNumber(),
+                                 "Semantic Analysis");
+                throw new Error("Id not in scope, ending.");
+            }
+            _S_Logger.logMessage("Found '" + concreteNode.children[0].children[0].getValue() + "' in scope " + scope.nameAsString() + ".");
+
+            //type check
+            _S_Logger.logMessage("Checking if id '" + concreteNode.children[0].children[0].getValue() + "' is assigned the type it was declared.");
+            var typeCheck = scope.confirmType(concreteNode.children[0].children[0].getValue(), abstractNode.children[1]);
+            if (!typeCheck) {
+                _S_Logger.logError("Type mismatch. Expected " + scope.getTypeOfSymbol(concreteNode.children[0].children[0].getValue()) + ".",
+                                 abstractNode.getLineNumber(), "Semantic Analysis");
+                throw new Error("Type mismatch, ending");
+            }
+            _S_Logger.logMessage("Id assigned.");
+        }
+
+        //vardecl
+        public static semAnalyzeVariableDeclaration(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            var newNode = new Node("VarDecl");
+
+            var type = new Node(concreteNode.children[0].getValue());
+            var value = new Node(concreteNode.children[1].children[0].getValue());
+            newNode.addChild(type);
+            newNode.addChild(value);
+            abstractNode.addChild(newNode);
+
+            var newSymbol = new Symbol(concreteNode.children[1].children[0].getValue(), concreteNode.children[0].getValue(), concreteNode.children[0].getLineNumber());
+            scope.addSymbol(newSymbol);
+            _S_Logger.logMessage("Variable added to symbol table: " + newSymbol.getType() + " " + newSymbol.getName() +
+                               " in Scope " + scope.nameAsString() + ".")
+        }
+
+        //while
+        public static semAnalyzeWhileStatement(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            var newNode = new Node("While");
+            abstractNode.addChild(newNode);
+            abstractNode = newNode;
+
+            this.semAnalyzeBoolExpr(concreteNode.children[1], abstractNode, scope);
+            this.semAnalyzeBlock(concreteNode.children[2], scope, abstractNode);
+        }
+
+        //if
+        public static semAnalyzeIfStatement(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            var newNode = new Node("If");
+            abstractNode.addChild(newNode);
+            abstractNode = newNode;
+
+            this.semAnalyzeBoolExpr(concreteNode.children[1], abstractNode, scope);
+            this.semAnalyzeBlock(concreteNode.children[2], scope, abstractNode);
+        }
+
+        //to-do: expression methods
         
     }
 
