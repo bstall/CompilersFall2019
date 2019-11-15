@@ -4,7 +4,7 @@ module StallCompiler{
         private name: number;
         private symbols: Symbol[] = [];
         private children: Scope[] = [];
-        private parent: Scope[] = null;
+        private parent: Scope = null;
 
         //name methods
         public setName(name: number): void {

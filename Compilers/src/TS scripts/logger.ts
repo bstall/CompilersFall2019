@@ -71,5 +71,43 @@ module StallCompiler {
             var log = <HTMLTextAreaElement> document.getElementById("log-output");
             log.value += message + "\n";
         }
+
+        //display ast from semantic analysis
+        public static logAST(output: string): void {
+            var log = <HTMLTextAreaElement> document.getElementById('ast-output');
+            log.value = output;
+        }
+
+        //populate symbol table
+        public static logSymbolTable(symbolTable: Scope[]): void {
+            for (var i = 0; i < symbolTable.length; i++) {
+                this.logScope(symbolTable[i]);
+            }
+        }
+
+        //scope tracking part of symbol table
+        public static logScope(scope: Scope): void {
+            var table = <HTMLTableElement> document.getElementById('symbol-table');
+            var unusedSymbols: Symbol[] = [];
+            for (var i = 0; i < scope.getAllSymbols().length; i++) {
+                var symbols = scope.getAllSymbols();
+
+                var row = <HTMLTableRowElement> table.insertRow(i + 1);
+                var name  = <HTMLTableCellElement> row.insertCell(0);
+                var type  = <HTMLTableCellElement> row.insertCell(1);
+                var level = <HTMLTableCellElement> row.insertCell(2);
+                var line  = <HTMLTableCellElement> row.insertCell(3);
+
+                name.innerHTML = symbols[i].getName();
+                type.innerHTML = symbols[i].getType();
+                level.innerHTML = scope.nameAsString();
+                line.innerHTML = symbols[i].getLine();
+
+                if (!symbols[i].getInitialized()) {
+                    unusedSymbols.push(symbols[i]);
+                }
+            }
+
+        }
     }
 }
