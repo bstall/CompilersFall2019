@@ -206,6 +206,32 @@ module StallCompiler{
                     _S_Logger.logError("Undefined expression.", concreteNode.getLineNumber(), "Semantic Analysis");
                     throw new Error("Undefined expression. Shouldn't have been sent here.");
             }
+
+        }
+        public static semAnalyzeIntExpr(concreteNode: Node, abstractNode: Node, scope: Scope): void {
+            if (concreteNode.children.length === 1) {
+                var value = new Node(concreteNode.children[0].getValue());
+                value.setInt(true);
+                abstractNode.addChild(value);
+            } else {
+                
+                var value = new Node(concreteNode.children[0].getValue());
+                value.setInt(true);
+                abstractNode.addChild(value);
+
+                //only do addition
+                var plus = new Node("+");
+                abstractNode.addChild(plus);
+                abstractNode = plus;
+                //only really want int expr
+                var typeCheck = concreteNode.children[2].children[0];
+                if (typeCheck.getType() === "Boolean Expression" || typeCheck.getType() === "String Expression") {
+                    _S_Logger.logError("Type mismatch, expected Int Expression.", typeCheck.getLineNumber(), "Semantic Analysis");
+                    throw new Error("Type mismatch.");
+                } 
+                
+                this.semAnalyzeExpression(concreteNode.children[2], abstractNode, scope);
+            }
         }
         
     }
