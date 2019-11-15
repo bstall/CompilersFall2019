@@ -16,6 +16,8 @@ var _TokenIndex: number = 0;
 var _VerboseMode: boolean = true;
 //tree for cst output of parse
 var _CST: StallCompiler.Tree = null;
+//SA
+var _S_SemanticAnalysis = StallCompiler.SemanticAnalysis;
 
 //variables for types of tokens
 const L_BRACE       = {type: 'LEFT_BRACE', value: '{'};

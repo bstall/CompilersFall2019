@@ -15,7 +15,7 @@ var StallCompiler;
         };
         //functions to add different types of nodes
         Tree.prototype.addBranchNode = function (type) {
-            var node = new StallCompiler.Node();
+            var node = new Node();
             node.setType(type);
             if (this.root === null || (!this.root)) {
                 this.root = node;
@@ -28,7 +28,7 @@ var StallCompiler;
             }
         };
         Tree.prototype.addLeafNode = function (token) {
-            var node = new StallCompiler.Node();
+            var node = new Node();
             node.setType(token.type);
             node.setValue(token.value);
             node.setLeafNode(true);
