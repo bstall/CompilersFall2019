@@ -18,7 +18,7 @@ var StallCompiler;
             this.buildAST(_CST.getRoot());
             _S_Logger.logAST(this.AST.toStringAST());
             _S_Logger.logSymbolTable(this.scopes);
-            _S_Logger.logIgnoringVerboseMode("Semantic Analysis complete.");
+            _S_Logger.logIgnoreVMode("\nSemantic Analysis complete.\n");
         };
         SemanticAnalysis.buildAST = function (root) {
             this.semAnalyzeProgram(root);

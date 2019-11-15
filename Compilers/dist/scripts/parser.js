@@ -11,6 +11,7 @@ var StallCompiler;
             _CST = new StallCompiler.Tree();
             this.parseProgram();
             _S_Logger.logCST();
+            _S_Logger.logIgnoreVMode("\nCST built.");
         };
         //start with largest structures and recursively make parse calls
         //each parse call adds a node to the cst

@@ -22,7 +22,7 @@ module StallCompiler{
             this.buildAST(_CST.getRoot());
             _S_Logger.logAST(this.AST.toStringAST());
             _S_Logger.logSymbolTable(this.scopes);
-            _S_Logger.logIgnoreVMode("Semantic Analysis complete.");
+            _S_Logger.logIgnoreVMode("\nSemantic Analysis complete.\n");
         }
         public static buildAST(root: Node): void {
             this.semAnalyzeProgram(root);

@@ -8,6 +8,7 @@ module StallCompiler {
             _CST = new Tree();
             this.parseProgram();
             _S_Logger.logCST();
+            _S_Logger.logIgnoreVMode("\nCST built.");
         }
 
         //start with largest structures and recursively make parse calls
