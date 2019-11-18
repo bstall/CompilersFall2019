@@ -42,7 +42,7 @@ var StallCompiler;
                 _S_Logger.logIgnoreVMode("Completed parsing program.");
             }
             //_S_Logger.logCST();
-            _S_SemanticAnalysis.performAnalysis();
+            StallCompiler.SemanticAnalysis.performAnalysis();
         };
         //trims whitespace
         Utils.trim = function (str) {

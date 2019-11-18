@@ -61,6 +61,37 @@ var StallCompiler;
             var log = document.getElementById("log-output");
             log.value += message + "\n";
         };
+        //display ast from semantic analysis
+        Logger.logAST = function (output) {
+            var log = document.getElementById('ast-output');
+            log.value = output;
+        };
+        //populate symbol table
+        Logger.logSymbolTable = function (symbolTable) {
+            for (var i = 0; i < symbolTable.length; i++) {
+                this.logScope(symbolTable[i]);
+            }
+        };
+        //scope tracking part of symbol table
+        Logger.logScope = function (scope) {
+            var table = document.getElementById('symbol-table');
+            var unusedSymbols = [];
+            for (var i = 0; i < scope.getAllSymbols().length; i++) {
+                var symbols = scope.getAllSymbols();
+                var row = table.insertRow(i + 1);
+                var name = row.insertCell(0);
+                var type = row.insertCell(1);
+                var level = row.insertCell(2);
+                var line = row.insertCell(3);
+                name.innerHTML = symbols[i].getName();
+                type.innerHTML = symbols[i].getType();
+                level.innerHTML = scope.nameAsString();
+                line.innerHTML = symbols[i].getLine();
+                if (!symbols[i].getInitialized()) {
+                    unusedSymbols.push(symbols[i]);
+                }
+            }
+        };
         return Logger;
     }());
     StallCompiler.Logger = Logger;
