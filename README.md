@@ -3,5 +3,4 @@ Compiler design course repository for practice working with and building compile
 Lexer files in lexer branch.\
 Parser files in parser branch.\
 SA files in semanticAnalysis branch.\
-SA completed 11/18/2019.\
-There are still some fixes I would like to make but parser and SA can be graded at this time.
+Code Gen in master.
