@@ -33,5 +33,20 @@ module StallCompiler{
                 }
             }
         }
+        //method to handle strings in the table
+        public writeStringToHeap(string: string): number {
+            var start: number;
+            this.addByteAtAddr("00", this.heapPos.toString());
+            this.heapPos--;
+            
+            for (var i = string.length - 1; i >= 0; i--) {
+                start = this.heapPos;
+                var hex = string.charCodeAt(i).toString(16);
+                this.addByteAtAddr(hex, this.heapPos.toString());
+                this.heapPos--;
+            }
+            
+            return start;
+        }
     }
 }
