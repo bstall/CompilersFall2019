@@ -69,5 +69,16 @@ module StallCompiler {
                 }
             }
         }
+
+        //padding for code table
+        public static leftPad(string: string, length: number): string {
+            if (string.length === 2) {
+                return string;
+            }
+            for (var i = 1; i < length; i++) {
+                string = "0" + string;
+            }
+            return string;
+        }
     }
 }

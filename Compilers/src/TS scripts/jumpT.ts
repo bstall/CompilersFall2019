@@ -1,19 +1,19 @@
 module StallCompiler{
     export class jumpT{
-        private items: JumpTableItem[] = [];
+        private items: JumpTItem[] = [];
         //holds as jump byte
         private prefix: string = "J";
         private suffix: number = 0;
 
         //item methods
-        public getItems(): JumpTableItem[] {
+        public getItems(): JumpTItem[] {
             return this.items;
         }
-        public getItemAtIndex(index: number): JumpTableItem {
+        public getItemAtIndex(index: number): JumpTItem {
             return this.items[index];
         }
         
-        public addItem(item: JumpTableItem): void {
+        public addItem(item: JumpTItem): void {
             this.items.push(item);
         }
         //temp methods
@@ -29,8 +29,8 @@ module StallCompiler{
             this.suffix++;
         }
 
-        
-        public getItemWithId(temp): JumpTableItem {
+
+        public getItemWithId(temp): JumpTItem {
             for (var i = 0; i < this.items.length; i++) {
                 if (this.items[i].getTemp() === temp) {
                     return this.items[i];
@@ -38,9 +38,23 @@ module StallCompiler{
             }
             return null;
         }
+
+        public removeTempsInCodeT(codeT: CodeT): void {
+            //regex to match temp markers
+            var regex = /^(J[0-9])/;
+            for (var i = 0; i < codeT.table.length; i++) {
+                var current = codeT.table[i];
+                console.log(current.match(regex));
+                if (current.match(regex)) {
+                    var item: JumpTItem = this.getItemWithId(current.match(regex)[1]);
+                    codeT.addByteAtAddr(Utils.leftPad(item.getDist().toString(16), 2), i.toString());
+                }
+            }
+        }
+
     }
     //item getters/setters
-    export class JumpTableItem {
+    export class JumpTItem {
         private temp: string;
         private dist: number;
         
