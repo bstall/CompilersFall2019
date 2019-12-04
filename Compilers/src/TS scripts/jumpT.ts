@@ -5,8 +5,38 @@ module StallCompiler{
         private prefix: string = "J";
         private suffix: number = 0;
 
+        //item methods
         public getItems(): JumpTableItem[] {
             return this.items;
+        }
+        public getItemAtIndex(index: number): JumpTableItem {
+            return this.items[index];
+        }
+        
+        public addItem(item: JumpTableItem): void {
+            this.items.push(item);
+        }
+        //temp methods
+        public getCurrentTemp(): string {
+            return this.prefix + this.suffix.toString();
+        }
+        
+        public getNextTemp(): string {
+            this.suffix++;
+            return this.prefix + this.suffix.toString();
+        }
+        public incrementTemp(): void {
+            this.suffix++;
+        }
+
+        
+        public getItemWithId(temp): JumpTableItem {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].getTemp() === temp) {
+                    return this.items[i];
+                }
+            }
+            return null;
         }
     }
     //item getters/setters
