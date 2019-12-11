@@ -66,11 +66,34 @@ module StallCompiler{
             this.codeT.addByte(fromAddr);
         }
         //NOP
+        public static noOp(): void {
+            //just adds op code to code table
+            this.codeT.addByte('EA');
+        }
         //BRK
+        public static break(): void {
+            //same as nop
+            this.codeT.addByte('00');
+        }
         //CPX
+        public static compareByte(atAddr: string, fromAddr: string): void {
+            this.codeT.addByte('EC');
+            this.codeT.addByte(atAddr);
+            this.codeT.addByte(fromAddr);
+        }
         //BNE
+        public static branch(compByte: string): void {
+            this.codeT.addByte('D0');
+            this.codeT.addByte(compByte)
+        }
         //INC
+        public static incrementByte(): void {
+            this.codeT.addByte('EE');
+        }
         //SYS
+        public static systemCall(): void {
+            this.codeT.addByte('FF');
+        }
 
     }
 }
