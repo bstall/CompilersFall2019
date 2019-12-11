@@ -49,8 +49,22 @@ module StallCompiler{
             this.codeT.addByte(constant);
         }
         //LDX 2
+        public static loadXRegFromMem(atAddr: string, fromAddr: string): void {
+            this.codeT.addByte('AE');
+            this.codeT.addByte(atAddr);
+            this.codeT.addByte(fromAddr);
+        }
         //LDY 1
+        public static loadYRegWithConst(constant: string): void {
+            this.codeT.addByte('A0');
+            this.codeT.addByte(constant);
+        }
         //LDY 2
+        public static loadYRegFromMem(atAddr: string, fromAddr: string): void {
+            this.codeT.addByte('AC');
+            this.codeT.addByte(atAddr);
+            this.codeT.addByte(fromAddr);
+        }
         //NOP
         //BRK
         //CPX
