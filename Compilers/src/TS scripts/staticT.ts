@@ -1,6 +1,6 @@
 //file to keep track of static allocation of memory
 module StallCompiler{
-    export class staticT{
+    export class StaticT{
         private items: staticTItem[] = [];
         private prefix: string = "T";
         private suffix: number = 0;

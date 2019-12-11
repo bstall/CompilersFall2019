@@ -1,5 +1,5 @@
 module StallCompiler{
-    export class jumpT{
+    export class JumpT{
         private items: JumpTItem[] = [];
         //holds as jump byte
         private prefix: string = "J";

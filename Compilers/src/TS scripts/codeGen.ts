@@ -14,10 +14,30 @@ module StallCompiler{
     export class CodeGen{
         //initialize variables
         private static codeT: CodeT;
-        private static staticT: staticT;
-        private static jumpT: jumpT;
+        private static staticT: StaticT;
+        private static jumpT: JumpT;
         private static jumpTCounter: number = 0;
 
+        public static genCode(node:Node, scope: Scope):void {
+            _S_Logger.logIgnoreVMode("Beginning Code Gen.");
+            this.staticT = new StaticT();
+            this.codeT = new CodeT();
+            this.jumpT = new JumpT();
+            
+        }
+        //int decl - saves temp for int value
+        public static genCodeForIntDecl(node: Node, scope: Scope): void {
+            // Initialize to zero
+            this.loadAccWithConst("00");
+            this.storeAccInMem(this.staticT.getCurrentTemp(), "XX");
+            
+            // Make entry in static table
+            var item = new staticTItem(this.staticT.getCurrentTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset(), "int");
+            this.staticT.addItem(item);
+            this.staticT.incrementTemp();
+        }
+
+        //pushing op codes down to bottom
         //instruction set methods
         //LDA 1
         public static loadAccWithConst(constant: string): void {
