@@ -18,5 +18,31 @@ module StallCompiler{
         private static jumpT: jumpT;
         private static jumpTCounter: number = 0;
 
+        //instruction set methods
+        //LDA 1
+        public static loadAccWithConst(constant: string): void {
+            //op code
+            this.codeT.addByte('A9');
+            this.codeT.addByte(constant);
+        }
+        //LDA 2
+        public static loadAccFromMem(atAddress: string, fromAddress: string): void {
+            this.codeT.addByte('AD');
+            this.codeT.addByte(atAddress);
+            this.codeT.addByte(fromAddress);
+        }
+        //STA
+        //ADC
+        //LDX 1
+        //LDX 2
+        //LDY 1
+        //LDY 2
+        //NOP
+        //BRK
+        //CPX
+        //BNE
+        //INC
+        //SYS
+
     }
 }
