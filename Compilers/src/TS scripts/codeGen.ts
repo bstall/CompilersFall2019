@@ -25,6 +25,24 @@ module StallCompiler{
             this.jumpT = new JumpT();
             
         }
+        //vardecl
+        public static genCodeForVarDecl(node: Node, scope: Scope): void {
+            switch (node.children[0].getType()) {
+                case "int":
+                    this.genCodeForIntDecl(node, scope);
+                    break;
+                case "bool":
+                    this.genCodeForBoolDecl(node, scope);
+                    break;
+                case "string":
+                    this.genCodeForStringDecl(node, scope);
+                    break;
+                default:
+                    //should not get errors at this point
+                    _S_Logger.logError("Variable type undefined.", node.getLineNumber(), "Code Gen");
+                    throw new Error("broken");
+            }
+        }
         //bool expr
         public static genCodeForBoolExpr(node: Node, scope: Scope) {
             console.log(node);
