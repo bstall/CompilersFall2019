@@ -25,6 +25,35 @@ module StallCompiler{
             this.jumpT = new JumpT();
             
         }
+        //assign
+        public static genCodeForAssignStmt(node: Node, scope: Scope): void {
+            //find id in static t 
+            console.log(node);
+            if (node.children[1].getIdentifier()) {
+                //set id to other id value
+                var firstTableEntry = this.staticT.findItemWithIdentifier(node.children[1].getType());
+                var secondTableEntry = this.staticT.findItemWithIdentifier(node.children[0].getType())
+                this.loadAccFromMem(firstTableEntry.getTemp(), "XX");
+                this.storeAccInMem(secondTableEntry.getTemp(), "XX");
+            } else if (node.children[1].getInt()) {
+                //int assign    
+                var tableEntry = this.staticT.findItemWithIdentifier(node.children[0].getType());
+                var value = Utils.leftPad(node.children[1].getType(), 2);
+                this.loadAccWithConst(value);
+                this.storeAccInMem(tableEntry.getTemp(), "XX"); 
+            } else if (node.children[1].checkBoolean()) {
+                //bool assign
+                
+            } else {
+                //string
+                //have to write to heap, bottom-up
+                var entry = this.staticT.findItemWithIdentifier(node.children[0].getType());
+                var pointer = this.codeT.writeStringToHeap(node.children[1].getType());
+                this.loadAccWithConst(pointer.toString(16).toUpperCase());
+                this.storeAccInMem(entry.getTemp(), "XX");
+            }
+        }
+        //print
         public static genCodeForPrintStmt(node: Node, scope: Scope): void {
             console.log(node);
             if (node.children[0].getIdentifier()) {
