@@ -26,14 +26,28 @@ module StallCompiler{
             this.codeT.addByte(constant);
         }
         //LDA 2
-        public static loadAccFromMem(atAddress: string, fromAddress: string): void {
+        public static loadAccFromMem(atAddr: string, fromAddr: string): void {
             this.codeT.addByte('AD');
-            this.codeT.addByte(atAddress);
-            this.codeT.addByte(fromAddress);
+            this.codeT.addByte(atAddr);
+            this.codeT.addByte(fromAddr);
         }
         //STA
+        public static storeAccInMem(atAddr: string, fromAddr: string): void {
+            this.codeT.addByte('8D');
+            this.codeT.addByte(atAddr);
+            this.codeT.addByte(fromAddr);
+        }
         //ADC
+        public static addWithCarry(atAddr: string, fromAddr: string): void {
+            this.codeT.addByte('6D');
+            this.codeT.addByte(atAddr);
+            this.codeT.addByte(fromAddr);
+        }
         //LDX 1
+        public static loadXRegrWithConst(constant: string): void {
+            this.codeT.addByte('A2');
+            this.codeT.addByte(constant);
+        }
         //LDX 2
         //LDY 1
         //LDY 2
