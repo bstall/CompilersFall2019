@@ -25,6 +25,34 @@ module StallCompiler{
             this.jumpT = new JumpT();
             
         }
+        //bool expr
+        public static genCodeForBoolExpr(node: Node, scope: Scope) {
+            console.log(node);
+            switch (node.getType()) {
+                case "==":
+                    console.log("==");
+                    this.genCodeForEquivStmt(node, scope);
+                    break;
+                case "!=":
+                    console.log("!=");
+                    break;
+                case "true":
+                    console.log("true");
+                    break;
+                case "false":
+                    this.loadXRegWithConst("01");
+                    this.loadAccWithConst("00");
+                    this.storeAccInMem("00", "00");
+                    this.compareByte("00", "00");
+                    break;
+                default:
+                    _S_Logger.logError("Undefined bool type.", node.getLineNumber(), "Code Gen");
+                    throw new Error("broken");
+            }
+        }
+        public static genCodeForEquivStmt(node: Node, scope: Scope): void {
+            
+        }
         //assign
         public static genCodeForAssignStmt(node: Node, scope: Scope): void {
             //find id in static t 
