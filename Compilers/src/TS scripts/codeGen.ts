@@ -25,6 +25,49 @@ module StallCompiler{
             this.jumpT = new JumpT();
             
         }
+        public static genCodeForPrintStmt(node: Node, scope: Scope): void {
+            console.log(node);
+            if (node.children[0].getIdentifier()) {
+                var tableEntry = this.staticT.findItemWithIdentifier(node.children[0].getType());
+                this.loadYRegFromMem(tableEntry.getTemp(), "XX");
+                
+                // change x register if we're printing a string or an int
+                if (tableEntry.getType() === "int") {
+                    this.loadXRegWithConst("01");
+                } else {
+                    this.loadXRegWithConst("02");
+                }
+                
+                this.systemCall();
+            } else if (node.children[0].getInt()) {
+                //int
+                this.genCodeForIntExpr(node.children[0], scope);
+                this.storeAccInMem("00", "00");
+                //system call to print int
+                this.loadXRegWithConst("01");
+                this.loadYRegFromMem("00", "00");
+                this.systemCall();
+            } else if (node.children[0].checkBoolean()) {
+                //boolean
+                
+            } else {
+                //string
+                // write it to the heap
+                var heapPosition = this.codeT.writeStringToHeap(node.children[0].getType());
+                // load acc with heap position
+                this.loadAccWithConst(heapPosition.toString(16).toUpperCase());
+                this.storeAccInMem("00", "00");
+                // system call to print string
+                this.loadXRegWithConst("02");
+                this.loadYRegFromMem("00", "00");
+                this.systemCall();
+            }            
+        }
+        public static genCodeForIntExpr(node: Node, scope: Scope): void {
+            
+        }
+
+        //decls
         //int decl - saves temp for int value
         public static genCodeForIntDecl(node: Node, scope: Scope): void {
             // Initialize to zero
@@ -33,6 +76,17 @@ module StallCompiler{
             
             // Make entry in static table
             var item = new staticTItem(this.staticT.getCurrentTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset(), "int");
+            this.staticT.addItem(item);
+            this.staticT.incrementTemp();
+        }
+        //string and bool similar to int
+        public static genCodeForStringDecl(node: Node, scope: Scope): void {
+            var item = new staticTItem(this.staticT.getNextTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset() + 1, "string");
+            this.staticT.addItem(item);
+        }
+        
+        public static genCodeForBoolDecl(node: Node, scope: Scope): void {
+            var item = new staticTItem(this.staticT.getCurrentTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset(), "bool");
             this.staticT.addItem(item);
             this.staticT.incrementTemp();
         }
@@ -64,7 +118,7 @@ module StallCompiler{
             this.codeT.addByte(fromAddr);
         }
         //LDX 1
-        public static loadXRegrWithConst(constant: string): void {
+        public static loadXRegWithConst(constant: string): void {
             this.codeT.addByte('A2');
             this.codeT.addByte(constant);
         }
