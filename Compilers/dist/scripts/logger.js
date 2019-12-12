@@ -72,6 +72,10 @@ var StallCompiler;
                 this.logScope(symbolTable[i]);
             }
         };
+        Logger.logCodeTable = function (codeTable) {
+            var log = document.getElementById('code-output');
+            log.value = codeTable.toString();
+        };
         //scope tracking part of symbol table
         Logger.logScope = function (scope) {
             var table = document.getElementById('symbol-table');
