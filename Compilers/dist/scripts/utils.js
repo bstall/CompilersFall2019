@@ -43,6 +43,7 @@ var StallCompiler;
             }
             //_S_Logger.logCST();
             StallCompiler.SemanticAnalysis.performAnalysis();
+            //StallCompiler.CodeGen.CodeGen();
         };
         //trims whitespace
         Utils.trim = function (str) {

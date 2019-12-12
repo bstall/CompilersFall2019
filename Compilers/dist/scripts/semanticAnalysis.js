@@ -4,6 +4,7 @@
 ///<reference path='symbol.js' />
 ///<reference path='globals.js' />
 ///<reference path='node.js' />
+///<reference path='codeGen.js' />
 var StallCompiler;
 (function (StallCompiler) {
     var SemanticAnalysis = /** @class */ (function () {
@@ -19,6 +20,7 @@ var StallCompiler;
             _S_Logger.logAST(this.AST.toStringAST());
             _S_Logger.logSymbolTable(this.scopes);
             _S_Logger.logIgnoreVMode("\nSemantic Analysis complete.\n");
+            _S_CodeGen.genCode(this.AST.getRoot(), this.scopes[0]);
         };
         SemanticAnalysis.buildAST = function (root) {
             this.semAnalyzeProgram(root);

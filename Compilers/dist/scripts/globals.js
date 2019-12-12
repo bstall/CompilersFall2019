@@ -1,3 +1,17 @@
+///<reference path='lexer.js' />
+///<reference path='logger.js' />
+///<reference path='token.js' />
+///<reference path='utils.js' />
+/// <reference path="node.js"/>
+/// <reference path="parser.js"/>
+/// <reference path="tree.js"/>
+/// <reference path="semanticAnalysis.js"/>
+/// <reference path="symbol.js"/>
+///<reference path='scope.js' />
+///<reference path='codeGen.js' />
+///<reference path='codeT.js' />
+///<reference path='staticT.js' />
+///<reference path='jumpT.js' />
 //file for global variables for Stall Compiler
 //lexer
 var _S_Lexer = StallCompiler.Lexer;
@@ -17,6 +31,10 @@ var _VerboseMode = true;
 var _CST = null;
 //SA
 var _S_SemanticAnalysis = StallCompiler.SemanticAnalysis;
+var _S_CodeGen = StallCompiler.CodeGen;
+var _S_codeT;
+var _S_staticT;
+var _S_jumpT;
 //variables for types of tokens
 var L_BRACE = { type: 'LEFT_BRACE', value: '{' };
 var R_BRACE = { type: 'RIGHT_BRACE', value: '}' };

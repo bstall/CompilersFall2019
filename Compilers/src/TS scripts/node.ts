@@ -18,7 +18,7 @@ module StallCompiler {
         private parent: Node;
         private isLeafNode: boolean;
 
-        constructor(type?: string) {
+        constructor(type: string) {
             if (type) {
                 this.type = type;
             } else {

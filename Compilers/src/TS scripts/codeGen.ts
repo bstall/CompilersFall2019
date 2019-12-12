@@ -4,7 +4,6 @@
 ///<reference path='globals.ts' />
 ///<reference path='utils.ts' />
 ///<reference path='logger.ts' />
-
 ///<reference path='codeT.ts' />
 ///<reference path='staticT.ts' />
 ///<reference path='jumpT.ts' />
@@ -13,12 +12,12 @@
 module StallCompiler{
     export class CodeGen{
         //initialize variables
-        private static codeT: CodeT;
-        private static staticT: StaticT;
-        private static jumpT: JumpT;
-        private static jumpTCounter: number = 0;
+        private codeT: CodeT;
+        private staticT: StaticT;
+        private jumpT: JumpT;
+        //private static jumpTCounter: number = 0;
 
-        public static genCode(node:Node, scope: Scope):void {
+        public genCode(node:Node, scope: Scope) {
             _S_Logger.logIgnoreVMode("Beginning Code Gen.");
             this.staticT = new StaticT();
             this.codeT = new CodeT();
@@ -32,7 +31,7 @@ module StallCompiler{
             _S_Logger.logIgnoreVMode("Code Generation complete.");
             
         }
-        public static genCodeFromNode(node: Node, scope: Scope): void {
+        public genCodeFromNode(node: StallCompiler.Node, scope: StallCompiler.Scope) {
             _S_Logger.logMessage("Generating code for " + node.getType());
             console.log(node);
             switch (node.getType()) {
@@ -61,14 +60,14 @@ module StallCompiler{
             }   
         }
         
-        public static genCodeForBlock(node: Node, scope: Scope): void {
+        public genCodeForBlock(node: Node, scope: Scope) {
             for (var i = 0; i < node.children.length; i++) {
                 console.log(node.children[i]);
                 this.genCodeFromNode(node.children[i], scope);
             }
         }
         
-        public static genCodeForWhileStmt(node: Node, scope: Scope): void {
+        public genCodeForWhileStmt(node: Node, scope: Scope) {
             var current = this.codeT.getCurrentAddr();
             this.genCodeForBoolExpr(node.children[0], scope);
             
@@ -92,7 +91,7 @@ module StallCompiler{
             this.branch(leftPadded);
         }
         
-        public static genCodeForIfStmt(node: Node, scope: Scope): void {   
+        public genCodeForIfStmt(node: Node, scope: Scope) {   
             
             // comparing two identifiers   
             if (node.children[0].children[0].getIdentifier() && node.children[0].children[1].getIdentifier()) {
@@ -120,7 +119,7 @@ module StallCompiler{
             
         }
         //vardecl
-        public static genCodeForVarDecl(node: Node, scope: Scope): void {
+        public genCodeForVarDecl(node: Node, scope: Scope) {
             switch (node.children[0].getType()) {
                 case "int":
                     this.genCodeForIntDecl(node, scope);
@@ -138,7 +137,7 @@ module StallCompiler{
             }
         }
         //bool expr
-        public static genCodeForBoolExpr(node: Node, scope: Scope) {
+        public genCodeForBoolExpr(node: Node, scope: Scope) {
             console.log(node);
             switch (node.getType()) {
                 case "==":
@@ -162,11 +161,11 @@ module StallCompiler{
                     throw new Error("broken");
             }
         }
-        public static genCodeForEquivStmt(node: Node, scope: Scope): void {
+        public genCodeForEquivStmt(node: Node, scope: Scope) {
             
         }
         //assign
-        public static genCodeForAssignStmt(node: Node, scope: Scope): void {
+        public genCodeForAssignStmt(node: Node, scope: Scope) {
             //find id in static t 
             console.log(node);
             if (node.children[1].getIdentifier()) {
@@ -194,7 +193,7 @@ module StallCompiler{
             }
         }
         //print
-        public static genCodeForPrintStmt(node: Node, scope: Scope): void {
+        public genCodeForPrintStmt(node: Node, scope: Scope) {
             console.log(node);
             if (node.children[0].getIdentifier()) {
                 var tableEntry = this.staticT.findItemWithIdentifier(node.children[0].getType());
@@ -232,13 +231,13 @@ module StallCompiler{
                 this.systemCall();
             }            
         }
-        public static genCodeForIntExpr(node: Node, scope: Scope): void {
+        public genCodeForIntExpr(node: Node, scope: Scope) {
             
         }
 
         //decls
         //int decl - saves temp for int value
-        public static genCodeForIntDecl(node: Node, scope: Scope): void {
+        public genCodeForIntDecl(node: Node, scope: Scope) {
             // Initialize to zero
             this.loadAccWithConst("00");
             this.storeAccInMem(this.staticT.getCurrentTemp(), "XX");
@@ -249,12 +248,12 @@ module StallCompiler{
             this.staticT.incrementTemp();
         }
         //string and bool similar to int
-        public static genCodeForStringDecl(node: Node, scope: Scope): void {
+        public genCodeForStringDecl(node: Node, scope: Scope) {
             var item = new staticTItem(this.staticT.getNextTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset() + 1, "string");
             this.staticT.addItem(item);
         }
         
-        public static genCodeForBoolDecl(node: Node, scope: Scope): void {
+        public genCodeForBoolDecl(node: Node, scope: Scope) {
             var item = new staticTItem(this.staticT.getCurrentTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset(), "bool");
             this.staticT.addItem(item);
             this.staticT.incrementTemp();
@@ -263,78 +262,78 @@ module StallCompiler{
         //pushing op codes down to bottom
         //instruction set methods
         //LDA 1
-        public static loadAccWithConst(constant: string): void {
+        public loadAccWithConst(constant: string) {
             //op code
             this.codeT.addByte('A9');
             this.codeT.addByte(constant);
         }
         //LDA 2
-        public static loadAccFromMem(atAddr: string, fromAddr: string): void {
+        public loadAccFromMem(atAddr: string, fromAddr: string) {
             this.codeT.addByte('AD');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         }
         //STA
-        public static storeAccInMem(atAddr: string, fromAddr: string): void {
+        public storeAccInMem(atAddr: string, fromAddr: string) {
             this.codeT.addByte('8D');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         }
         //ADC
-        public static addWithCarry(atAddr: string, fromAddr: string): void {
+        public addWithCarry(atAddr: string, fromAddr: string) {
             this.codeT.addByte('6D');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         }
         //LDX 1
-        public static loadXRegWithConst(constant: string): void {
+        public loadXRegWithConst(constant: string) {
             this.codeT.addByte('A2');
             this.codeT.addByte(constant);
         }
         //LDX 2
-        public static loadXRegFromMem(atAddr: string, fromAddr: string): void {
+        public loadXRegFromMem(atAddr: string, fromAddr: string) {
             this.codeT.addByte('AE');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         }
         //LDY 1
-        public static loadYRegWithConst(constant: string): void {
+        public loadYRegWithConst(constant: string) {
             this.codeT.addByte('A0');
             this.codeT.addByte(constant);
         }
         //LDY 2
-        public static loadYRegFromMem(atAddr: string, fromAddr: string): void {
+        public loadYRegFromMem(atAddr: string, fromAddr: string) {
             this.codeT.addByte('AC');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         }
         //NOP
-        public static noOp(): void {
+        public noOp() {
             //just adds op code to code table
             this.codeT.addByte('EA');
         }
         //BRK
-        public static break(): void {
+        public break(){
             //same as nop
             this.codeT.addByte('00');
         }
         //CPX
-        public static compareByte(atAddr: string, fromAddr: string): void {
+        public compareByte(atAddr: string, fromAddr: string) {
             this.codeT.addByte('EC');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         }
         //BNE
-        public static branch(compByte: string): void {
+        public branch(compByte: string) {
             this.codeT.addByte('D0');
             this.codeT.addByte(compByte)
         }
         //INC
-        public static incrementByte(): void {
+        public incrementByte() {
             this.codeT.addByte('EE');
         }
         //SYS
-        public static systemCall(): void {
+        public systemCall() {
             this.codeT.addByte('FF');
         }
 
