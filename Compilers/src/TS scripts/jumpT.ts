@@ -6,6 +6,13 @@ module StallCompiler{
         private suffix: number = 0;
 
         //item methods
+        public setDistForItem(item: JumpTItem, distance: number) {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i] === item) {
+                    this.items[i].setDist(distance);
+                }
+            }
+        }
         public getItems(): JumpTItem[] {
             return this.items;
         }

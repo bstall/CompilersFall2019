@@ -84,6 +84,10 @@ module StallCompiler {
                 this.logScope(symbolTable[i]);
             }
         }
+        public static logCodeTable(codeTable: CodeT) {
+            var log = <HTMLTextAreaElement> document.getElementById('code-output');
+            log.value = codeTable.toString();
+        }
 
         //scope tracking part of symbol table
         public static logScope(scope: Scope): void {

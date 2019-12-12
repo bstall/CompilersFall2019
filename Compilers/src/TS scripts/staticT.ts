@@ -55,7 +55,7 @@ module StallCompiler{
         }
         
         //same method as jump table
-        public removeTempsInCodeTable(codeT: CodeT): void {
+        public removeTempsInCodeT(codeT: CodeT): void {
             var regex = /^(T[0-9])/;
             for (var i = 0; i < codeT.table.length; i++) {
                 var current = codeT.table[i];

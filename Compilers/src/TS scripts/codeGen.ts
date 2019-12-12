@@ -23,6 +23,100 @@ module StallCompiler{
             this.staticT = new StaticT();
             this.codeT = new CodeT();
             this.jumpT = new JumpT();
+            this.genCodeFromNode(node, scope);
+            this.break();
+            this.codeT.zeroOutEmptySlots();
+            this.staticT.removeTempsInCodeT(this.codeT);
+            this.jumpT.removeTempsInCodeT(this.codeT);
+            _S_Logger.logCodeTable(this.codeT);
+            _S_Logger.logIgnoreVMode("Code Generation complete.");
+            
+        }
+        public static genCodeFromNode(node: Node, scope: Scope): void {
+            _S_Logger.logMessage("Generating code for " + node.getType());
+            console.log(node);
+            switch (node.getType()) {
+                case "Block":
+                    this.genCodeForBlock(node, scope);
+                    break;
+                case "While Statement":
+                    this.genCodeForWhileStmt(node, scope);
+                    break;
+                case "If Statement":
+                    console.log(node); 
+                    this.genCodeForIfStmt(node, scope);
+                    break;
+                case "Print Statement":
+                    this.genCodeForPrintStmt(node, scope);
+                    break;
+                case "Variable Declaration":
+                    this.genCodeForVarDecl(node, scope);
+                    break;
+                case "Assignment Statement":
+                    this.genCodeForAssignStmt(node, scope);
+                    break; 
+                default:
+                    _S_Logger.logError("Node has unidentified type.", node.getLineNumber(), "Code Generator");
+                    throw new Error("Unidentified type of node in Code Gen.");    
+            }   
+        }
+        
+        public static genCodeForBlock(node: Node, scope: Scope): void {
+            for (var i = 0; i < node.children.length; i++) {
+                console.log(node.children[i]);
+                this.genCodeFromNode(node.children[i], scope);
+            }
+        }
+        
+        public static genCodeForWhileStmt(node: Node, scope: Scope): void {
+            var current = this.codeT.getCurrentAddr();
+            this.genCodeForBoolExpr(node.children[0], scope);
+            
+            //create jump table entry
+            var jumpTemp = this.jumpT.getNextTemp();
+            var jumpItem = new JumpTItem(jumpTemp);
+            this.jumpT.addItem(jumpItem);
+            this.branch(Utils.leftPad(this.codeT.getCurrentAddr().toString(16), 2));
+            
+            //block in while loop
+            console.log(node);
+            this.genCodeForBlock(node.children[1], scope);
+            
+            this.loadAccWithConst("00");
+            this.storeAccInMem("00", "00");
+            this.loadXRegWithConst("01");
+            this.compareByte("00", "00");
+            
+            var toLeftPad = (256 - (this.codeT.getCurrentAddr() - current + 2));
+            var leftPadded = Utils.leftPad(toLeftPad.toString(16), 2);
+            this.branch(leftPadded);
+        }
+        
+        public static genCodeForIfStmt(node: Node, scope: Scope): void {   
+            
+            // comparing two identifiers   
+            if (node.children[0].children[0].getIdentifier() && node.children[0].children[1].getIdentifier()) {
+                console.log(node);
+                var firstTableEntry = this.staticT.findItemWithIdentifier(node.children[0].children[0].getType());
+                this.loadXRegFromMem(firstTableEntry.getTemp(), "XX");
+            
+                var secondTableEntry = this.staticT.findItemWithIdentifier(node.children[0].children[1].getType());
+                this.compareByte(secondTableEntry.getTemp(), "XX");
+                
+                var jumpEntry = new JumpTItem(this.jumpT.getCurrentTemp());
+                this.jumpT.addItem(jumpEntry);
+                var start = this.codeT.getCurrentAddr();
+                this.branch(jumpEntry.getTemp());
+                this.jumpT.incrementTemp();
+            
+                this.genCodeForBlock(node.children[1], scope);
+            
+                //change jump dist
+                console.log(this.codeT.getCurrentAddr() - start + 1);
+                this.jumpT.setDistForItem(jumpEntry, this.codeT.getCurrentAddr() - start + 1)
+            } else if (node.children.length === 1 && node.children[0].getType() === "true") {
+                this.genCodeForBlock(node.children[1], scope);
+            }
             
         }
         //vardecl
