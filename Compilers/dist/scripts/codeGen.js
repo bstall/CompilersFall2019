@@ -23,7 +23,7 @@ var StallCompiler;
             this.codeT.zeroOutEmptySlots();
             this.staticT.removeTempsInCodeT(this.codeT);
             this.jumpT.removeTempsInCodeT(this.codeT);
-            _S_Logger.logCodeTable(this.codeT);
+            _S_Logger.logCodeTable(this.codeT.table);
             console.log(this.codeT);
             _S_Logger.logIgnoreVMode("Code Generation complete.");
         };
