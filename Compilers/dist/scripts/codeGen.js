@@ -24,6 +24,7 @@ var StallCompiler;
             this.staticT.removeTempsInCodeT(this.codeT);
             this.jumpT.removeTempsInCodeT(this.codeT);
             _S_Logger.logCodeTable(this.codeT);
+            console.log(this.codeT);
             _S_Logger.logIgnoreVMode("Code Generation complete.");
         };
         CodeGen.genCodeFromNode = function (node, scope) {
