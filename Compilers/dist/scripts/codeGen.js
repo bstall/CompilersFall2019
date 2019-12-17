@@ -13,7 +13,7 @@ var StallCompiler;
         function CodeGen() {
         }
         //private static jumpTCounter: number = 0;
-        CodeGen.prototype.genCode = function (node, scope) {
+        CodeGen.genCode = function (node, scope) {
             _S_Logger.logIgnoreVMode("Beginning Code Gen.");
             this.staticT = new StallCompiler.StaticT();
             this.codeT = new StallCompiler.CodeT();
@@ -26,7 +26,7 @@ var StallCompiler;
             _S_Logger.logCodeTable(this.codeT);
             _S_Logger.logIgnoreVMode("Code Generation complete.");
         };
-        CodeGen.prototype.genCodeFromNode = function (node, scope) {
+        CodeGen.genCodeFromNode = function (node, scope) {
             _S_Logger.logMessage("Generating code for " + node.getType());
             console.log(node);
             switch (node.getType()) {
@@ -43,7 +43,7 @@ var StallCompiler;
                 case "Print Statement":
                     this.genCodeForPrintStmt(node, scope);
                     break;
-                case "Variable Declaration":
+                case "VarDecl":
                     this.genCodeForVarDecl(node, scope);
                     break;
                 case "Assignment Statement":
@@ -54,13 +54,13 @@ var StallCompiler;
                     throw new Error("Unidentified type of node in Code Gen.");
             }
         };
-        CodeGen.prototype.genCodeForBlock = function (node, scope) {
+        CodeGen.genCodeForBlock = function (node, scope) {
             for (var i = 0; i < node.children.length; i++) {
                 console.log(node.children[i]);
                 this.genCodeFromNode(node.children[i], scope);
             }
         };
-        CodeGen.prototype.genCodeForWhileStmt = function (node, scope) {
+        CodeGen.genCodeForWhileStmt = function (node, scope) {
             var current = this.codeT.getCurrentAddr();
             this.genCodeForBoolExpr(node.children[0], scope);
             //create jump table entry
@@ -79,7 +79,7 @@ var StallCompiler;
             var leftPadded = StallCompiler.Utils.leftPad(toLeftPad.toString(16), 2);
             this.branch(leftPadded);
         };
-        CodeGen.prototype.genCodeForIfStmt = function (node, scope) {
+        CodeGen.genCodeForIfStmt = function (node, scope) {
             // comparing two identifiers   
             if (node.children[0].children[0].getIdentifier() && node.children[0].children[1].getIdentifier()) {
                 console.log(node);
@@ -102,7 +102,7 @@ var StallCompiler;
             }
         };
         //vardecl
-        CodeGen.prototype.genCodeForVarDecl = function (node, scope) {
+        CodeGen.genCodeForVarDecl = function (node, scope) {
             switch (node.children[0].getType()) {
                 case "int":
                     this.genCodeForIntDecl(node, scope);
@@ -120,7 +120,7 @@ var StallCompiler;
             }
         };
         //bool expr
-        CodeGen.prototype.genCodeForBoolExpr = function (node, scope) {
+        CodeGen.genCodeForBoolExpr = function (node, scope) {
             console.log(node);
             switch (node.getType()) {
                 case "==":
@@ -144,10 +144,10 @@ var StallCompiler;
                     throw new Error("broken");
             }
         };
-        CodeGen.prototype.genCodeForEquivStmt = function (node, scope) {
+        CodeGen.genCodeForEquivStmt = function (node, scope) {
         };
         //assign
-        CodeGen.prototype.genCodeForAssignStmt = function (node, scope) {
+        CodeGen.genCodeForAssignStmt = function (node, scope) {
             //find id in static t 
             console.log(node);
             if (node.children[1].getIdentifier()) {
@@ -177,7 +177,7 @@ var StallCompiler;
             }
         };
         //print
-        CodeGen.prototype.genCodeForPrintStmt = function (node, scope) {
+        CodeGen.genCodeForPrintStmt = function (node, scope) {
             console.log(node);
             if (node.children[0].getIdentifier()) {
                 var tableEntry = this.staticT.findItemWithIdentifier(node.children[0].getType());
@@ -216,11 +216,11 @@ var StallCompiler;
                 this.systemCall();
             }
         };
-        CodeGen.prototype.genCodeForIntExpr = function (node, scope) {
+        CodeGen.genCodeForIntExpr = function (node, scope) {
         };
         //decls
         //int decl - saves temp for int value
-        CodeGen.prototype.genCodeForIntDecl = function (node, scope) {
+        CodeGen.genCodeForIntDecl = function (node, scope) {
             // Initialize to zero
             this.loadAccWithConst("00");
             this.storeAccInMem(this.staticT.getCurrentTemp(), "XX");
@@ -230,11 +230,11 @@ var StallCompiler;
             this.staticT.incrementTemp();
         };
         //string and bool similar to int
-        CodeGen.prototype.genCodeForStringDecl = function (node, scope) {
+        CodeGen.genCodeForStringDecl = function (node, scope) {
             var item = new StallCompiler.staticTItem(this.staticT.getNextTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset() + 1, "string");
             this.staticT.addItem(item);
         };
-        CodeGen.prototype.genCodeForBoolDecl = function (node, scope) {
+        CodeGen.genCodeForBoolDecl = function (node, scope) {
             var item = new StallCompiler.staticTItem(this.staticT.getCurrentTemp(), node.children[1].getType(), scope.nameAsInt(), this.staticT.getOffset(), "bool");
             this.staticT.addItem(item);
             this.staticT.incrementTemp();
@@ -242,78 +242,78 @@ var StallCompiler;
         //pushing op codes down to bottom
         //instruction set methods
         //LDA 1
-        CodeGen.prototype.loadAccWithConst = function (constant) {
+        CodeGen.loadAccWithConst = function (constant) {
             //op code
             this.codeT.addByte('A9');
             this.codeT.addByte(constant);
         };
         //LDA 2
-        CodeGen.prototype.loadAccFromMem = function (atAddr, fromAddr) {
+        CodeGen.loadAccFromMem = function (atAddr, fromAddr) {
             this.codeT.addByte('AD');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         };
         //STA
-        CodeGen.prototype.storeAccInMem = function (atAddr, fromAddr) {
+        CodeGen.storeAccInMem = function (atAddr, fromAddr) {
             this.codeT.addByte('8D');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         };
         //ADC
-        CodeGen.prototype.addWithCarry = function (atAddr, fromAddr) {
+        CodeGen.addWithCarry = function (atAddr, fromAddr) {
             this.codeT.addByte('6D');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         };
         //LDX 1
-        CodeGen.prototype.loadXRegWithConst = function (constant) {
+        CodeGen.loadXRegWithConst = function (constant) {
             this.codeT.addByte('A2');
             this.codeT.addByte(constant);
         };
         //LDX 2
-        CodeGen.prototype.loadXRegFromMem = function (atAddr, fromAddr) {
+        CodeGen.loadXRegFromMem = function (atAddr, fromAddr) {
             this.codeT.addByte('AE');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         };
         //LDY 1
-        CodeGen.prototype.loadYRegWithConst = function (constant) {
+        CodeGen.loadYRegWithConst = function (constant) {
             this.codeT.addByte('A0');
             this.codeT.addByte(constant);
         };
         //LDY 2
-        CodeGen.prototype.loadYRegFromMem = function (atAddr, fromAddr) {
+        CodeGen.loadYRegFromMem = function (atAddr, fromAddr) {
             this.codeT.addByte('AC');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         };
         //NOP
-        CodeGen.prototype.noOp = function () {
+        CodeGen.noOp = function () {
             //just adds op code to code table
             this.codeT.addByte('EA');
         };
         //BRK
-        CodeGen.prototype["break"] = function () {
+        CodeGen["break"] = function () {
             //same as nop
             this.codeT.addByte('00');
         };
         //CPX
-        CodeGen.prototype.compareByte = function (atAddr, fromAddr) {
+        CodeGen.compareByte = function (atAddr, fromAddr) {
             this.codeT.addByte('EC');
             this.codeT.addByte(atAddr);
             this.codeT.addByte(fromAddr);
         };
         //BNE
-        CodeGen.prototype.branch = function (compByte) {
+        CodeGen.branch = function (compByte) {
             this.codeT.addByte('D0');
             this.codeT.addByte(compByte);
         };
         //INC
-        CodeGen.prototype.incrementByte = function () {
+        CodeGen.incrementByte = function () {
             this.codeT.addByte('EE');
         };
         //SYS
-        CodeGen.prototype.systemCall = function () {
+        CodeGen.systemCall = function () {
             this.codeT.addByte('FF');
         };
         return CodeGen;
