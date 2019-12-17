@@ -2,7 +2,7 @@
 var StallCompiler;
 (function (StallCompiler) {
     var CodeT = /** @class */ (function () {
-        //only allowed 265 bytes
+        //only allowed 256 bytes
         function CodeT() {
             this.table = [];
             this.currentAddr = 0;

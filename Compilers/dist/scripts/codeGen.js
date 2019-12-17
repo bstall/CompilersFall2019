@@ -33,20 +33,20 @@ var StallCompiler;
                 case "Block":
                     this.genCodeForBlock(node, scope);
                     break;
-                case "While Statement":
+                case "While":
                     this.genCodeForWhileStmt(node, scope);
                     break;
-                case "If Statement":
+                case "If":
                     console.log(node);
                     this.genCodeForIfStmt(node, scope);
                     break;
-                case "Print Statement":
+                case "Print":
                     this.genCodeForPrintStmt(node, scope);
                     break;
                 case "VarDecl":
                     this.genCodeForVarDecl(node, scope);
                     break;
-                case "Assignment Statement":
+                case "Assignment":
                     this.genCodeForAssignStmt(node, scope);
                     break;
                 default:
